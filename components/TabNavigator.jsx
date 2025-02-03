@@ -5,9 +5,11 @@ import NewScreen from '../pages/New';
 import ActiveScreen from '../pages/Active';
 import SettingsScreen from '../pages/Settings';
 import NewDetailsScreen from '../pages/NewDetails';
+import ActiveDetailsScreen from '../pages/ActiveDetails';
 import { Colors, Gaps } from '../shared/tokens';
 import NewIcon from '../assets/icons/receipt-alt-svgrepo-com.svg';
 import ActiveIcon from '../assets/icons/check-svgrepo-com.svg';
+
 import SettingsIcon from '../assets/icons/gear-svgrepo-com.svg';
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +50,11 @@ export default function TabNavigator() {
       <Tab.Screen
         name="NewDetails"
         component={NewDetailsScreen}
+        options={{ tabBarButton: () => null, tabBarItemStyle: { display: 'none' } }}
+      />
+      <Tab.Screen
+        name="ActiveDetails"
+        component={ActiveDetailsScreen}
         options={{ tabBarButton: () => null, tabBarItemStyle: { display: 'none' } }}
       />
     </Tab.Navigator>
