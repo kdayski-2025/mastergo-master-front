@@ -16,6 +16,8 @@ export default function RegisterScreen({ navigation }) {
     birthDate: '',
     citizenship: '',
     email: '',
+    city: '',
+    specialty: ''
   });
 
   useEffect(() => {
@@ -45,9 +47,9 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    const { fullName, birthDate, citizenship, email } = formData;
+    const { fullName, birthDate, citizenship, email, city, specialty } = formData;
 
-    if (!fullName || !birthDate || !citizenship || !email) {
+    if (!fullName || !birthDate || !citizenship || !email || !city || !specialty) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
@@ -105,6 +107,20 @@ export default function RegisterScreen({ navigation }) {
         value={formData.email}
         onChangeText={(value) => handleInputChange('email', value)}
         keyboardType="email-address"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Город"
+        value={formData.city}
+        onChangeText={(value) => handleInputChange('city', value)}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Специальность"
+        value={formData.specialty}
+        onChangeText={(value) => handleInputChange('specialty', value)}
       />
 
       <Button text="Продолжить" onPress={handleSubmit} />
