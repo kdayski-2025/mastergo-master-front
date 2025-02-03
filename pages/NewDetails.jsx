@@ -41,10 +41,11 @@ export default function NewDetailsScreen({ route }) {
             <Text>{request.address}</Text>
           </View>
           <View>
-            {request.photos?.map((photo) => (
-              <Image source={{ uri: photo }} />
+            {request.photos?.map((photo, index) => (
+              <Image key={index} source={{ uri: photo }} />
             ))}
           </View>
+
           <View>
             {request.requestType === 'auction' && (
               <TextInput

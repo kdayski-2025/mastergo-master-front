@@ -17,7 +17,7 @@ export default function RegisterScreen({ navigation }) {
     citizenship: '',
     email: '',
     city: '',
-    specialty: ''
+    specialty: '',
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function RegisterScreen({ navigation }) {
   }, [submitted, loginInfo]);
 
   useEffect(() => {
-    if (user) navigation.navigate('Home');
+    if (user) navigation.navigate('Main');
   }, [user]);
 
   const handleInputChange = (name, value) => {

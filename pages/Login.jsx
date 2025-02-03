@@ -11,7 +11,7 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     if (submitted) {
       if (!user) navigation.navigate('Pin');
-      else navigation.navigate('Home');
+      else navigation.navigate('Main');
       setSubmitted(false);
     }
   }, [user, submitted]);
