@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import RequestServiceInstance from '../services/request.service';
+import RequestsServiceInstance from '../services/requests.service';
 
-const useRequest = () => {
+const useRequests = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [request, setRequest] = useState([]);
+	const [requests, setRequests] = useState([]);
 
 	useEffect(() => {
-		const request$ = RequestServiceInstance.state$.subscribe((state) => {
+		const request$ = RequestsServiceInstance.state$.subscribe((state) => {
 			setLoading(state.loading);
 			setError(state.error);
-			setRequest(state.request);
+			setRequests(state.requests);
 		});
 
 		return () => {
@@ -21,8 +21,8 @@ const useRequest = () => {
 	return {
 		error,
 		loading,
-		request,
+		requests,
 	};
 };
 
-export default useRequest;
+export default useRequests;

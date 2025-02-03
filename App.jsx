@@ -5,7 +5,7 @@ import LoginScreen from './pages/Login';
 import PincodeScreen from './pages/Pincode';
 import RegisterScreen from './pages/Register';
 import HomeScreen from './pages/Home';
-
+import NewDetailsScreen from './pages/NewDetails';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -20,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Pin" component={PincodeScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="NewDetails" component={NewDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

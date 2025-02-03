@@ -5,29 +5,29 @@ class RequestService {
 	initialState = {
 		loading: false,
 		error: null,
-		requests: []
+		request: null
 	};
 
 	state = this.initialState;
 	state$ = new Subject();
 
-	async get() {
+	async get(id) {
 		if (this.state.loading) {
 			return;
 		}
 
 		this.state = {
-			...this.state,
+			...this.initialState,
 			loading: true,
 		};
 		this.state$.next(this.state);
 
 		try {
-			const requests = await GET('/requests');
+			const request = await GET(`/requests/${id}`);
 			this.state = {
 				...this.state,
 				loading: false,
-				requests,
+				request,
 			};
 			this.state$.next(this.state);
 		} catch (error) {

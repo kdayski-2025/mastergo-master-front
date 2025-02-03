@@ -1,17 +1,17 @@
 import { Subject } from 'rxjs';
 import { GET } from '../api/fetch-api';
 
-class UserService {
+class RequestsService {
 	initialState = {
 		loading: false,
 		error: null,
-		user: null
+		requests: []
 	};
 
 	state = this.initialState;
 	state$ = new Subject();
 
-	async get(body) {
+	async get() {
 		if (this.state.loading) {
 			return;
 		}
@@ -23,12 +23,11 @@ class UserService {
 		this.state$.next(this.state);
 
 		try {
-			const result = await GET('/user', body);
+			const requests = await GET('/requests');
 			this.state = {
 				...this.state,
 				loading: false,
-				error: result.error,
-				user: result.user
+				requests,
 			};
 			this.state$.next(this.state);
 		} catch (error) {
@@ -43,5 +42,5 @@ class UserService {
 	}
 }
 
-const UserServiceInstance = new UserService();
-export default UserServiceInstance;
+const RequestsServiceInstance = new RequestsService();
+export default RequestsServiceInstance;

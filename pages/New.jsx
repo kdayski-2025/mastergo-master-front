@@ -1,25 +1,33 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import useRequest from '../hooks/useRequest';
-import RequestServiceInstance from '../services/request.service';
-import { useFocusEffect } from '@react-navigation/native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import useRequests from '../hooks/useRequests';
+import RequestsServiceInstance from '../services/requests.service';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 export default function NewScreen() {
-  const { requests } = useRequest();
+  const { requests } = useRequests();
+  const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {
-      RequestServiceInstance.get();
+      RequestsServiceInstance.get();
       return () => {};
     }, [])
   );
 
+  const handlePress = (id) => {
+    navigation.navigate('NewDetails', { id });
+  };
+
   return (
     <View style={styles.container}>
       {requests.map((request, index) => (
-        <View key={index}>
+        <Pressable key={index} onPress={() => handlePress(request.id)}>
+          <Text>Сантехник</Text>
+          <Text>{request.description}</Text>
           <Text>{request.address}</Text>
-        </View>
+          <Text>2000р</Text>
+        </Pressable>
       ))}
     </View>
   );
