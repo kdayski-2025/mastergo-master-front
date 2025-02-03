@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ScrollView } from 'react-native';
 import useRequests from '../hooks/useRequests';
 import RequestsServiceInstance from '../services/requests.service';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { Colors, Gaps } from '../shared/tokens';
 
 export default function NewScreen() {
   const { requests } = useRequests();
@@ -21,14 +22,21 @@ export default function NewScreen() {
 
   return (
     <View style={styles.container}>
-      {requests.map((request, index) => (
-        <Pressable key={index} onPress={() => handlePress(request.id)}>
-          <Text>Сантехник</Text>
-          <Text>{request.description}</Text>
-          <Text>{request.address}</Text>
-          <Text>2000р</Text>
-        </Pressable>
-      ))}
+      <View style={styles.header} />
+      <ScrollView contentContainerStyle={styles.content}>
+        {requests.map((request, index) => (
+          <Pressable 
+            key={index} 
+            style={styles.card}
+            onPress={() => handlePress(request.id)}
+          >
+            <Text style={styles.title}>Сантехник</Text>
+            <Text style={styles.description}>{request.description}</Text>
+            <Text style={styles.address}>{request.address}</Text>
+            <Text style={styles.price}>2000р</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -36,8 +44,42 @@ export default function NewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
-  map: {
-    flex: 1,
+  header: {
+    height: 20,
+    backgroundColor: 'transparent',
+  },
+  content: {
+    flexGrow: 1,
+    padding: Gaps.g12,
+  },
+  card: {
+    backgroundColor: Colors.white,
+    borderRadius: 8,
+    padding: Gaps.g12,
+    marginBottom: Gaps.g12,
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  description: {
+    color: Colors.gray,
+    marginBottom: 4,
+  },
+  address: {
+    color: Colors.gray,
+    marginBottom: 4,
+  },
+  price: {
+    color: Colors.green,
+    fontWeight: '500',
   },
 });

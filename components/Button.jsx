@@ -16,8 +16,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.green,
     padding: 18,
     borderRadius: 10,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   text: {
     textAlign: 'center',
+    color: Colors.white,
+    fontSize: 16,
+    fontWeight: '500',
   },
 });
