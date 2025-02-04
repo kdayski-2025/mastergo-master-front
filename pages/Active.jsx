@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   header: {
-    height: 20,
+    height: 40,
     backgroundColor: 'transparent',
   },
   content: {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Alert } from 'react-native';
-import { Colors, Gaps } from '../shared/tokens';
+import { StyleSheet, TextInput, View, Text } from 'react-native';
+import { Colors, Gaps, Radius, Shadows } from '../shared/tokens';
 import Button from '../components/Button';
 
 export default function SettingsScreen() {
@@ -26,9 +26,15 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.section}>
+        <Text style={styles.title}>Настройки</Text>
+        <Text style={styles.subtitle}>Управление вашим аккаунтом</Text>
+      </View>
+
       <TextInput
         style={styles.input}
         placeholder="Город"
+        placeholderTextColor={Colors.gray}
         value={formData.city}
         onChangeText={(value) => handleInputChange('city', value)}
       />
@@ -36,39 +42,56 @@ export default function SettingsScreen() {
       <TextInput
         style={styles.input}
         placeholder="Специальность"
+        placeholderTextColor={Colors.gray}
         value={formData.specialty}
         onChangeText={(value) => handleInputChange('specialty', value)}
       />
 
-      <Button text="Продолжить" onPress={handleSubmit} />
+      <View style={styles.buttonContainer}>
+        <Button text="Сохранить изменения" onPress={handleSubmit} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: 20,
+    backgroundColor: Colors.gray50,
     flex: 1,
-    gap: Gaps.g12,
+    padding: Gaps.g16,
+    paddingTop: 40,
   },
   title: {
-    fontSize: 36,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.black,
+    marginBottom: Gaps.g8,
   },
   subtitle: {
-    color: Colors.gray,
-    fontSize: 16,
-    marginBottom: 24,
+    fontSize: 14,
+    color: Colors.gray600,
+    marginBottom: Gaps.g24,
   },
   input: {
     borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 4,
-    padding: 10,
+    borderColor: Colors.gray300,
+    borderRadius: Radius.small,
+    padding: Gaps.g12,
     fontSize: 16,
-    marginBottom: 16,
+    color: Colors.black,
+    backgroundColor: Colors.gray50,
+    marginBottom: Gaps.g16,
+  },
+  buttonContainer: {
+    marginTop: Gaps.g24,
+    backgroundColor: Colors.white,
+    borderRadius: Radius.medium,
+    padding: Gaps.g16,
+    ...Shadows.small,
+  },
+  section: {
+    marginTop: Gaps.g40,
+    marginBottom: Gaps.g24,
+
   },
 });
