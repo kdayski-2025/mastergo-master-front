@@ -24,12 +24,13 @@ export default function NewScreen() {
     <View style={styles.container}>
       <View style={styles.header} />
       <ScrollView contentContainerStyle={styles.content}>
+        {!requests.length && (
+          <View style={styles.content_empty}>
+            <Text style={styles.message}>Нет активных заказов</Text>
+          </View>
+        )}
         {requests.map((request, index) => (
-          <Pressable 
-            key={index} 
-            style={styles.card}
-            onPress={() => handlePress(request.id)}
-          >
+          <Pressable key={index} style={styles.card} onPress={() => handlePress(request.id)}>
             <Text style={styles.title}>Сантехник</Text>
             <Text style={styles.description}>{request.description}</Text>
             <Text style={styles.address}>{request.address}</Text>
@@ -53,6 +54,16 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     padding: Gaps.g12,
+  },
+  content_empty: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  message: {
+    color: Colors.gray,
+    fontSize: 16,
   },
   card: {
     backgroundColor: Colors.white,
