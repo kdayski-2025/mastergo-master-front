@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.title_wrap}>
         <Text style={styles.title}>Введите{'\n'}номер телефона</Text>
-        <Text style={styles.subtitle}>Чтобы войти или стать{'\n'}клиентом Sperma</Text>
+        <Text style={styles.subtitle}>Чтобы войти или стать{'\n'}клиентом Mastergo</Text>
       </View>
       <PhoneNumberInput setSubmitted={setSubmitted} />
     </View>

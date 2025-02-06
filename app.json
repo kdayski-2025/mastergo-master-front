@@ -5,12 +5,13 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "myapp",
+    "scheme": "mastergo-master",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "api": {
       "url": "http://mars1.fanil.ru",
-      "port": "8001"
+      "port": "8001",
+      "assets": "/assets/requests"
     },
     "userType": "master",
     "ios": {

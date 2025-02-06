@@ -4,9 +4,13 @@ import Button from '../components/Button';
 import RequestServiceInstance from '../services/request.service';
 import useRequest from '../hooks/useRequest';
 import { Colors, Gaps, Radius, Shadows } from '../shared/tokens';
+import { getAssetUrl } from '../lib/lib';
+import OfferServiceInstance from '../services/offer.service';
+import useUser from '../hooks/useUser';
 
 export default function NewDetailsScreen({ route }) {
   const { id } = route.params;
+  const { user } = useUser();
   const { request } = useRequest();
   const [formData, setFormData] = useState({
     price: '',
@@ -22,13 +26,14 @@ export default function NewDetailsScreen({ route }) {
     }
   }, [id]);
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     const { price } = formData;
     if (!price) {
       Alert.alert('Ошибка', 'Укажите цену');
       return;
     }
-    Alert.alert('ГОЙДААаАаАаАА');
+    await OfferServiceInstance.post(id, { price, comment: 'Сделаю быстро и качественно', masterId: user.id });
+    Alert.alert('Ваш ответ отправлен');
   };
 
   return (
@@ -49,9 +54,10 @@ export default function NewDetailsScreen({ route }) {
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {request.photos.map((photo, index) => (
                     <Pressable key={index} onPress={() => console.log('Open photo')}>
-                      <Image 
-                        source={{ uri: photo }} 
+                      <Image
+                        source={{ uri: `${getAssetUrl()}/${photo}` }}
                         style={styles.thumbnail}
+                        resizeMode="cover"
                       />
                     </Pressable>
                   ))}
@@ -68,10 +74,7 @@ export default function NewDetailsScreen({ route }) {
                 onChangeText={handleChange}
               />
               <View style={styles.buttonWrapper}>
-                <Button
-                  text="Принять"
-                  onPress={handleAccept}
-                />
+                <Button text="Принять" onPress={handleAccept} />
               </View>
             </View>
           </>
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 60,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     paddingHorizontal: Gaps.g16,
   },

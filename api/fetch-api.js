@@ -72,6 +72,7 @@ export const POST = (endpoint = '', data = {}) => {
 			})
 			.catch((e) => {
 				const error = simplifyErrorMessage(e.message);
+				console.log(error);
 				reject(new Error(error));
 			});
 	});

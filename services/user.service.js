@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { GET } from '../api/fetch-api';
 
 class UserService {
@@ -8,36 +8,31 @@ class UserService {
 		user: null
 	};
 
-	state = this.initialState;
-	state$ = new Subject();
+	state$ = new BehaviorSubject(this.initialState);
 
 	async get(body) {
-		if (this.state.loading) {
+		if (this.state$.value.loading) {
 			return;
 		}
 
-		this.state = {
+		this.state$.next({
 			...this.initialState,
 			loading: true,
-		};
-		this.state$.next(this.state);
+		});
 
 		try {
 			const result = await GET('/user', body);
-			this.state = {
-				...this.state,
+			this.state$.next({
 				loading: false,
 				error: result.error,
 				user: result.user
-			};
-			this.state$.next(this.state);
+			});
 		} catch (error) {
-			this.state = {
-				...this.state,
+			this.state$.next({
 				loading: false,
 				error: error.message,
-			};
-			this.state$.next(this.state);
+				user: null
+			});
 			throw new Error(error.message);
 		}
 	}

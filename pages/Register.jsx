@@ -76,7 +76,7 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Стать клиентом Sperma</Text>
+      <Text style={styles.title}>Стать клиентом Mastergo</Text>
       <Text style={styles.subtitle}>Укажите ваши данные, чтобы использовать все функции приложения</Text>
 
       <TextInput
