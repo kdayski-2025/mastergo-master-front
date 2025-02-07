@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { Colors, Gaps } from '../shared/tokens';
-import LoginServiceInstance from '../services/login.service';
+import { Text, View, TextInput } from 'react-native';
+import { Colors } from '../../shared/tokens';
+import LoginServiceInstance from '../../services/login.service';
+import { styles } from './styled';
 
 export default function PincodeScreen({ length = 4, navigation }) {
   const [code, setCode] = useState(new Array(length).fill(''));
@@ -41,13 +42,18 @@ export default function PincodeScreen({ length = 4, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Придумайте код{'\n'}для входа в приложение</Text>
+      <Text style={styles.title}>
+        Придумайте код{'\n'}для входа в приложение
+      </Text>
       <View style={styles.box}>
         {code.map((value, index) => (
           <TextInput
             key={index}
             ref={(ref) => (inputs[index] = ref)}
-            style={{ ...styles.input, backgroundColor: value ? Colors.yellow : Colors.gray }}
+            style={{
+              ...styles.input,
+              backgroundColor: value ? Colors.success : Colors.error,
+            }}
             keyboardType="numeric"
             maxLength={1}
             value={value}
@@ -60,32 +66,3 @@ export default function PincodeScreen({ length = 4, navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: 48,
-    flex: 1,
-    gap: Gaps.g40,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-  box: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  input: {
-    width: 20,
-    height: 20,
-    borderRadius: 45,
-    marginHorizontal: 10,
-  },
-});

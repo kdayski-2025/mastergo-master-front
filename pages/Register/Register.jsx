@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import { Colors, Gaps } from '../shared/tokens';
-import Button from '../components/Button';
-import LoginServiceInstance from '../services/login.service';
-import UserServiceInstance from '../services/user.service';
-import useLogin from '../hooks/useLogin';
-import useUser from '../hooks/useUser';
+import { Text, TextInput, View, Alert } from 'react-native';
+import Button from '../../components/Button/Button';
+import LoginServiceInstance from '../../services/login.service';
+import UserServiceInstance from '../../services/user.service';
+import useLogin from '../../hooks/useLogin';
+import useUser from '../../hooks/useUser';
 
 export default function RegisterScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
@@ -47,9 +46,17 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    const { fullName, birthDate, citizenship, email, city, specialty } = formData;
+    const { fullName, birthDate, citizenship, email, city, specialty } =
+      formData;
 
-    if (!fullName || !birthDate || !citizenship || !email || !city || !specialty) {
+    if (
+      !fullName ||
+      !birthDate ||
+      !citizenship ||
+      !email ||
+      !city ||
+      !specialty
+    ) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
@@ -69,7 +76,12 @@ export default function RegisterScreen({ navigation }) {
       return;
     }
 
-    await LoginServiceInstance.set({ name: fullName, birth: birthDate, citizenship, email });
+    await LoginServiceInstance.set({
+      name: fullName,
+      birth: birthDate,
+      citizenship,
+      email,
+    });
     await LoginServiceInstance.register();
     setSubmitted(true);
   };
@@ -77,7 +89,9 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Стать клиентом Mastergo</Text>
-      <Text style={styles.subtitle}>Укажите ваши данные, чтобы использовать все функции приложения</Text>
+      <Text style={styles.subtitle}>
+        Укажите ваши данные, чтобы использовать все функции приложения
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -127,31 +141,3 @@ export default function RegisterScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: 20,
-    flex: 1,
-    gap: Gaps.g12,
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-  },
-  subtitle: {
-    color: Colors.gray,
-    fontSize: 16,
-    marginBottom: 24,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 4,
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 16,
-  },
-});

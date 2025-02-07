@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './pages/Login';
-import PincodeScreen from './pages/Pincode';
-import RegisterScreen from './pages/Register';
-import TabNavigator from './components/TabNavigator';
+import LoginScreen from './pages/Login/Login';
+import PincodeScreen from './pages/Pincode/Pincode';
+import RegisterScreen from './pages/Register/Register';
+import TabNavigator from './components/TabNavigator/TabNavigator';
 
 const Stack = createStackNavigator();
 

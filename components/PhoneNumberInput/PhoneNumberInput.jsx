@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Alert } from 'react-native';
-import { Colors, Gaps } from '../shared/tokens';
-import Button from './Button';
-import LoginServiceInstance from '../services/login.service';
-import UserServiceInstance from '../services/user.service';
+import { TextInput, View, Alert } from 'react-native';
+
+import Button from '../Button/Button';
+import LoginServiceInstance from '../../services/login.service';
+import UserServiceInstance from '../../services/user.service';
+
+import { styles } from './styled';
 
 export default function PhoneNumberInput({ setSubmitted }) {
   const [phoneNumber, setPhoneNumber] = useState('+7 (777) 777-77-77');
@@ -11,7 +13,9 @@ export default function PhoneNumberInput({ setSubmitted }) {
   const formatPhoneNumber = (input) => {
     const cleaned = input.replace(/\D/g, '');
 
-    const match = cleaned.match(/^(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+    const match = cleaned.match(
+      /^(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/
+    );
     if (!match) return cleaned;
 
     const [, countryCode, areaCode, prefix, firstPart, secondPart] = match;
@@ -36,7 +40,9 @@ export default function PhoneNumberInput({ setSubmitted }) {
   };
 
   const handleSubmit = async () => {
-    const isValid = phoneNumber.replace(/\D/g, '').length === 11 && phoneNumber.startsWith('+7');
+    const isValid =
+      phoneNumber.replace(/\D/g, '').length === 11 &&
+      phoneNumber.startsWith('+7');
     if (isValid) {
       await LoginServiceInstance.set({ phone: phoneNumber });
       await UserServiceInstance.get({ phone: phoneNumber });
@@ -63,19 +69,3 @@ export default function PhoneNumberInput({ setSubmitted }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    gap: Gaps.g40,
-  },
-  input: {
-    height: 50,
-    borderColor: Colors.gray,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 16,
-    fontSize: 18,
-  },
-});

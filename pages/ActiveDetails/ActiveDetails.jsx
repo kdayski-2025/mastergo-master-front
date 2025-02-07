@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
-import RequestServiceInstance from '../services/request.service';
-import useRequest from '../hooks/useRequest';
-import { Colors } from '../shared/tokens';
-import { getAssetUrl } from '../lib/lib';
+import { View, Text, Image } from 'react-native';
+import RequestServiceInstance from '../../services/request.service';
+import useRequest from '../../hooks/useRequest';
+import { getAssetUrl } from '../../lib/lib';
+import { styles } from './styled';
 
 export default function ActiveDetailsScreen({ route }) {
   const { id } = route.params;
@@ -26,7 +26,10 @@ export default function ActiveDetailsScreen({ route }) {
           </View>
           <View>
             {request.photos?.map((photo, index) => (
-              <Image key={index} source={{ uri: `${getAssetUrl()}/${photo}` }} />
+              <Image
+                key={index}
+                source={{ uri: `${getAssetUrl()}/${photo}` }}
+              />
             ))}
           </View>
         </>
@@ -34,17 +37,3 @@ export default function ActiveDetailsScreen({ route }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 100,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 4,
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 16,
-  },
-});

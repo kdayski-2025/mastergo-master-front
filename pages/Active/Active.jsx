@@ -1,7 +1,9 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Colors, Gaps } from '../shared/tokens';
+import { Text, View, ScrollView } from 'react-native';
+
+import { styles } from './styled';
+
+import CardOrder from '../../components/CardOrder/CardOrder';
 
 export default function ActiveScreen() {
   const requests = [
@@ -51,11 +53,6 @@ export default function ActiveScreen() {
       userId: 1,
     },
   ];
-  const navigation = useNavigation();
-
-  const handlePress = (id) => {
-    navigation.navigate('ActiveDetails', { id });
-  };
 
   return (
     <View style={styles.container}>
@@ -67,67 +64,16 @@ export default function ActiveScreen() {
           </View>
         )}
         {requests.map((request, index) => (
-          <Pressable key={index} style={styles.card} onPress={() => handlePress(request.id)}>
-            <Text style={styles.title}>Сантехник</Text>
-            <Text style={styles.description}>{request.description}</Text>
-            <Text style={styles.address}>{request.address}</Text>
-            <Text style={styles.price}>2000р</Text>
-          </Pressable>
+          <CardOrder
+            key={index}
+            index={index}
+            description={request.description}
+            address={request.address}
+            type={'ActiveDetails'}
+            id={request.id}
+          />
         ))}
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-  header: {
-    height: 40,
-    backgroundColor: 'transparent',
-  },
-  content: {
-    flexGrow: 1,
-    padding: Gaps.g12,
-  },
-  content_empty: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  message: {
-    color: Colors.gray,
-    fontSize: 16,
-  },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    padding: Gaps.g12,
-    marginBottom: Gaps.g12,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 4,
-  },
-  description: {
-    color: Colors.gray,
-    marginBottom: 4,
-  },
-  address: {
-    color: Colors.gray,
-    marginBottom: 4,
-  },
-  price: {
-    color: Colors.green,
-    fontWeight: '500',
-  },
-});

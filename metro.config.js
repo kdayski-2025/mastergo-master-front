@@ -12,4 +12,4 @@ config.resolver = {
   sourceExts: [...config.resolver.sourceExts, 'svg'],
 };
 
-module.exports = config; 
+module.exports = config;
