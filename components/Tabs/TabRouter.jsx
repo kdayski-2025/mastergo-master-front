@@ -9,7 +9,7 @@ import NewDetailsScreen from '../../pages/NewDetails/NewDetails';
 import ActiveDetailsScreen from '../../pages/ActiveDetails/ActiveDetails';
 
 import { Colors } from '../../shared/tokens';
-import { styles } from './styled';
+import { tabRouterStyles } from './styled';
 import NewIcon from '../../assets/icons/orders.svg';
 import ActiveIcon from '../../assets/icons/active-orders.svg';
 import SettingsIcon from '../../assets/icons/settings.svg';
@@ -22,47 +22,39 @@ export default function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: tabRouterStyles['tab-bar'],
         tabBarActiveTintColor: Colors.green,
         tabBarInactiveTintColor: Colors.gray,
-        tabBarLabelStyle: styles.tabLabel,
-        tabBarItemStyle: styles.tabItem,
+        tabBarLabelStyle: tabRouterStyles['tab-label'],
+        tabBarItemStyle: tabRouterStyles['tab-item'],
       }}
     >
       <Tab.Screen
         name="Новые"
         component={NewScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <NewIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <NewIcon width={size} height={size} fill={color} />,
         }}
       />
       <Tab.Screen
         name="Активные"
         component={ActiveScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <ActiveIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <ActiveIcon width={size} height={size} fill={color} />,
         }}
       />
       <Tab.Screen
         name="Настройки"
         component={SettingsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <SettingsIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <SettingsIcon width={size} height={size} fill={color} />,
         }}
       />
       <Tab.Screen
         name="Профиль"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <ProfileIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <ProfileIcon width={size} height={size} fill={color} />,
         }}
       />
       <Tab.Screen

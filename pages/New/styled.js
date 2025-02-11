@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Gaps } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     padding: Gaps.g12,
   },
-  content_empty: {
+  'content-empty': {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Gaps } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
     alignItems: 'stretch',
@@ -18,13 +18,5 @@ export const styles = StyleSheet.create({
     color: Colors.gray,
     fontSize: 16,
     marginBottom: 24,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 4,
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 16,
   },
 });

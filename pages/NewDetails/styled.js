@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Gaps, Radius, Shadows } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.gray50,
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     padding: Gaps.g16,
   },
-  section: {
+  'photo-section': {
     marginBottom: Gaps.g24,
     backgroundColor: Colors.white,
     borderRadius: Radius.medium,
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     marginRight: Gaps.g12,
     backgroundColor: Colors.gray100,
   },
-  priceSection: {
+  'price-section': {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: Gaps.g24,
@@ -55,21 +55,5 @@ export const styles = StyleSheet.create({
     borderRadius: Radius.medium,
     padding: Gaps.g16,
     ...Shadows.small,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: Colors.gray300,
-    borderRadius: Radius.small,
-    padding: Gaps.g12,
-    marginRight: Gaps.g12,
-    fontSize: 16,
-    backgroundColor: Colors.gray50,
-  },
-  buttonWrapper: {
-    width: 140,
-    padding: Gaps.g12,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

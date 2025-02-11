@@ -4,15 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styled';
 
-export default function CardOrder({
-  index,
-  title = 'Сантехник',
-  description,
-  address,
-  type,
-  id,
-  price = 2000,
-}) {
+export default function Card({ index, title = 'Сантехник', description, address, type, id, price = 2000 }) {
   const navigation = useNavigation();
 
   //   type'ActiveDetails'

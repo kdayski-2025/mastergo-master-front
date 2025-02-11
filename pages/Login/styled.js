@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Gaps } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
     alignItems: 'stretch',
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     gap: Gaps.g40,
   },
-  title_wrap: {
+  'title-wrap': {
     gap: Gaps.g12,
   },
   title: {

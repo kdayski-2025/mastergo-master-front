@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
 
-import { styles } from './styled';
+import styles from './styled';
 
-import CardOrder from '../../components/CardOrder/CardOrder';
+import Card from '../../components/Card/Card';
 
 export default function ActiveScreen() {
   const requests = [
@@ -59,12 +59,12 @@ export default function ActiveScreen() {
       <View style={styles.header} />
       <ScrollView contentContainerStyle={styles.content}>
         {!requests.length && (
-          <View style={styles.content_empty}>
+          <View style={styles['content-empty']}>
             <Text style={styles.message}>Нет активных заказов</Text>
           </View>
         )}
         {requests.map((request, index) => (
-          <CardOrder
+          <Card
             key={index}
             index={index}
             description={request.description}

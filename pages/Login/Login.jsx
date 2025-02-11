@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import PhoneNumberInput from '../../components/PhoneNumberInput/PhoneNumberInput';
+import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
 import useUser from '../../hooks/useUser';
-import { styles } from './styled';
+import styles from './styled';
 
 export default function LoginScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
@@ -18,11 +18,9 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.title_wrap}>
+      <View style={styles['title-wrap']}>
         <Text style={styles.title}>Введите{'\n'}номер телефона</Text>
-        <Text style={styles.subtitle}>
-          Чтобы войти или стать{'\n'}клиентом Mastergo
-        </Text>
+        <Text style={styles.subtitle}>Чтобы войти или стать{'\n'}клиентом Mastergo</Text>
       </View>
       <PhoneNumberInput setSubmitted={setSubmitted} />
     </View>

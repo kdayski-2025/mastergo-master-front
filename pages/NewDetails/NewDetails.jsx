@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  Alert,
-  ScrollView,
-  Pressable,
-} from 'react-native';
+import { View, Text, Image, Alert, ScrollView, Pressable } from 'react-native';
 import Button from '../../components/Button/Button';
 import RequestServiceInstance from '../../services/request.service';
 import useRequest from '../../hooks/useRequest';
 import { getAssetUrl } from '../../lib/lib';
 import OfferServiceInstance from '../../services/offer.service';
 import useUser from '../../hooks/useUser';
-import { styles } from './styled';
+import styles from './styled';
+import Input from '../../components/Input/Input';
 
 export default function NewDetailsScreen({ route }) {
   const { id } = route.params;
@@ -61,14 +54,11 @@ export default function NewDetailsScreen({ route }) {
             </View>
 
             {request.photos?.length > 0 && (
-              <View style={styles.section}>
+              <View style={styles['photo-section']}>
                 <Text style={styles.title}>Фотографии</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {request.photos.map((photo, index) => (
-                    <Pressable
-                      key={index}
-                      onPress={() => console.log('Open photo')}
-                    >
+                    <Pressable key={index} onPress={() => console.log('Open photo')}>
                       <Image
                         source={{ uri: `${getAssetUrl()}/${photo}` }}
                         style={styles.thumbnail}
@@ -80,17 +70,15 @@ export default function NewDetailsScreen({ route }) {
               </View>
             )}
 
-            <View style={styles.priceSection}>
-              <TextInput
+            <View style={styles['price-section']}>
+              <Input
                 style={styles.input}
                 keyboardType="numeric"
                 placeholder="Ваша цена"
                 value={formData.price}
                 onChangeText={handleChange}
               />
-              <View style={styles.buttonWrapper}>
-                <Button text="Принять" onPress={handleAccept} />
-              </View>
+              <Button text="Принять" onPress={handleAccept} />
             </View>
           </>
         )}
