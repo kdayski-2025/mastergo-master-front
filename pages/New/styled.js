@@ -15,14 +15,4 @@ export default StyleSheet.create({
     padding: Gaps.g12,
     paddingTop: 0,
   },
-  'content-empty': {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  message: {
-    color: Colors.gray,
-    fontSize: 16,
-  },
 });

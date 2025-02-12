@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Gaps } from '../../shared/tokens';
+import { Colors, Gaps, Radius } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   card: {
     backgroundColor: Colors.white,
     borderRadius: 8,
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: Radius.medium,
     elevation: 2,
   },
   title: {
@@ -25,5 +25,20 @@ export const styles = StyleSheet.create({
   price: {
     color: Colors.green,
     fontWeight: '500',
+  },
+  target: {
+    backgroundColor: Colors.green,
+  },
+  navigate: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    borderTopRightRadius: Radius.medium,
+    borderBottomRightRadius: Radius.medium,
   },
 });

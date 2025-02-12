@@ -1,15 +1,20 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable, View } from 'react-native';
+import RightArrow from '../../assets/icons/right-arrow.svg';
+import styles from './styled';
 
-import { styles } from './styled';
-
-export default function Card({ children, ...props }) {
+export default function Card({ children, state, ...props }) {
   return (
-    <Pressable style={styles.card} {...props}>
+    <Pressable style={[styles.card, styles[state]]} {...props}>
       {React.Children.map(children, (child) =>
         React.cloneElement(child, {
           style: [styles[child.props.type], child.props.style],
         })
+      )}
+      {state === 'target' && (
+        <View style={styles.navigate}>
+          <RightArrow />
+        </View>
       )}
     </Pressable>
   );
