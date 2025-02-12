@@ -22,10 +22,6 @@ export const styles = StyleSheet.create({
     color: Colors.gray,
     marginBottom: 4,
   },
-  address: {
-    color: Colors.gray,
-    marginBottom: 4,
-  },
   price: {
     color: Colors.green,
     fontWeight: '500',

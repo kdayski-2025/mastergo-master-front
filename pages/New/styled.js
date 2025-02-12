@@ -13,6 +13,7 @@ export default StyleSheet.create({
   content: {
     flexGrow: 1,
     padding: Gaps.g12,
+    paddingTop: 0,
   },
   'content-empty': {
     flexGrow: 1,
@@ -23,33 +24,5 @@ export default StyleSheet.create({
   message: {
     color: Colors.gray,
     fontSize: 16,
-  },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    padding: Gaps.g12,
-    marginBottom: Gaps.g12,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 4,
-  },
-  description: {
-    color: Colors.gray,
-    marginBottom: 4,
-  },
-  address: {
-    color: Colors.gray,
-    marginBottom: 4,
-  },
-  price: {
-    color: Colors.green,
-    fontWeight: '500',
   },
 });
