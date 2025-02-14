@@ -3,12 +3,11 @@ import { TextInput, View, Alert } from 'react-native';
 
 import Button from '../Button/Button';
 import LoginServiceInstance from '../../services/login.service';
-import UserServiceInstance from '../../services/user.service';
 
 import { phoneNumberInputStyles } from './styled';
 
 export default function PhoneNumberInput({ setSubmitted }) {
-  const [phoneNumber, setPhoneNumber] = useState('+7 (777) 777-77-77');
+  const [phoneNumber, setPhoneNumber] = useState('+7 (800) 555-35-35');
 
   const formatPhoneNumber = (input) => {
     const cleaned = input.replace(/\D/g, '');
@@ -41,7 +40,7 @@ export default function PhoneNumberInput({ setSubmitted }) {
     const isValid = phoneNumber.replace(/\D/g, '').length === 11 && phoneNumber.startsWith('+7');
     if (isValid) {
       await LoginServiceInstance.set({ phone: phoneNumber });
-      await UserServiceInstance.get({ phone: phoneNumber });
+      await LoginServiceInstance.auth({ phone: phoneNumber, code: '12345' });
       setSubmitted(true);
     } else {
       Alert.alert(

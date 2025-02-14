@@ -47,7 +47,7 @@ export default function NewScreen() {
         {!requests.length && <EmptyContent title={'Нет активных заказов'} />}
         {requests.map((request, index) => (
           <Card key={index} onPress={() => handlePress(request)} state={active === request.id ? 'target' : 'default'}>
-            <Text type={'title'}>masterType: {request.masterType}</Text>
+            <Text type={'title'}>{request.masterType.name}</Text>
             <Text type={'description'}>{request.description}</Text>
             <Text type={'description'}>{request.address}</Text>
             <Text type={'price'}>2000р</Text>

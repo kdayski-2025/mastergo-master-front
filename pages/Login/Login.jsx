@@ -10,7 +10,7 @@ export default function LoginScreen({ navigation }) {
 
   useEffect(() => {
     if (token) {
-      navigation.navigate('Requests');
+      navigation.navigate('Main');
     }
     if (submitted) {
       if (!token) navigation.navigate('Pin');
