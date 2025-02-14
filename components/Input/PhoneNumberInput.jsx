@@ -3,19 +3,16 @@ import { TextInput, View, Alert } from 'react-native';
 
 import Button from '../Button/Button';
 import LoginServiceInstance from '../../services/login.service';
-import UserServiceInstance from '../../services/user.service';
 
-import { styles } from './styled';
+import { phoneNumberInputStyles } from './styled';
 
 export default function PhoneNumberInput({ setSubmitted }) {
-  const [phoneNumber, setPhoneNumber] = useState('+7 (777) 777-77-77');
+  const [phoneNumber, setPhoneNumber] = useState('+7 (800) 555-35-35');
 
   const formatPhoneNumber = (input) => {
     const cleaned = input.replace(/\D/g, '');
 
-    const match = cleaned.match(
-      /^(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/
-    );
+    const match = cleaned.match(/^(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
     if (!match) return cleaned;
 
     const [, countryCode, areaCode, prefix, firstPart, secondPart] = match;
@@ -40,12 +37,10 @@ export default function PhoneNumberInput({ setSubmitted }) {
   };
 
   const handleSubmit = async () => {
-    const isValid =
-      phoneNumber.replace(/\D/g, '').length === 11 &&
-      phoneNumber.startsWith('+7');
+    const isValid = phoneNumber.replace(/\D/g, '').length === 11 && phoneNumber.startsWith('+7');
     if (isValid) {
       await LoginServiceInstance.set({ phone: phoneNumber });
-      await UserServiceInstance.get({ phone: phoneNumber });
+      await LoginServiceInstance.auth({ phone: phoneNumber, code: '12345' });
       setSubmitted(true);
     } else {
       Alert.alert(
@@ -56,9 +51,9 @@ export default function PhoneNumberInput({ setSubmitted }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={phoneNumberInputStyles.container}>
       <TextInput
-        style={styles.input}
+        style={phoneNumberInputStyles.input}
         value={phoneNumber}
         onChangeText={handleInputChange}
         placeholder="+7 (XXX) XXX-XX-XX"

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Colors, Gaps } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
     alignItems: 'stretch',
@@ -14,18 +14,5 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-
-  box: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  input: {
-    width: 20,
-    height: 20,
-    borderRadius: 45,
-    marginHorizontal: 10,
   },
 });

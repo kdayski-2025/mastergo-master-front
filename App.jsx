@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './pages/Login/Login';
 import PincodeScreen from './pages/Pincode/Pincode';
 import RegisterScreen from './pages/Register/Register';
-import TabNavigator from './components/TabNavigator/TabNavigator';
+import TabNavigator from './components/Tabs/TabRouter';
 
 const Stack = createStackNavigator();
 

@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native';
 import RequestServiceInstance from '../../services/request.service';
 import useRequest from '../../hooks/useRequest';
 import { getAssetUrl } from '../../lib/lib';
-import { styles } from './styled';
+import styles from './styled';
 
 export default function ActiveDetailsScreen({ route }) {
   const { id } = route.params;
@@ -26,10 +26,7 @@ export default function ActiveDetailsScreen({ route }) {
           </View>
           <View>
             {request.photos?.map((photo, index) => (
-              <Image
-                key={index}
-                source={{ uri: `${getAssetUrl()}/${photo}` }}
-              />
+              <Image key={index} source={{ uri: `${getAssetUrl()}/${photo}` }} />
             ))}
           </View>
         </>

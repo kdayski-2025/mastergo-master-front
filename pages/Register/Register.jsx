@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, Alert } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import Button from '../../components/Button/Button';
+import Input from '../../components/Input/Input';
 import LoginServiceInstance from '../../services/login.service';
 import UserServiceInstance from '../../services/user.service';
 import useLogin from '../../hooks/useLogin';
 import useUser from '../../hooks/useUser';
+import styles from './styled';
 
 export default function RegisterScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
@@ -46,17 +48,9 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    const { fullName, birthDate, citizenship, email, city, specialty } =
-      formData;
+    const { fullName, birthDate, citizenship, email, city, specialty } = formData;
 
-    if (
-      !fullName ||
-      !birthDate ||
-      !citizenship ||
-      !email ||
-      !city ||
-      !specialty
-    ) {
+    if (!fullName || !birthDate || !citizenship || !email || !city || !specialty) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
@@ -89,49 +83,37 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Стать клиентом Mastergo</Text>
-      <Text style={styles.subtitle}>
-        Укажите ваши данные, чтобы использовать все функции приложения
-      </Text>
+      <Text style={styles.subtitle}>Укажите ваши данные, чтобы использовать все функции приложения</Text>
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Фамилия, имя, отчество"
         value={formData.fullName}
         onChangeText={(value) => handleInputChange('fullName', value)}
       />
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Дата рождения (ДД.ММ.ГГГГ)"
         value={formData.birthDate}
         onChangeText={(value) => handleInputChange('birthDate', value)}
         keyboardType="numeric"
       />
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Гражданство"
         value={formData.citizenship}
         onChangeText={(value) => handleInputChange('citizenship', value)}
       />
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="E-mail"
         value={formData.email}
         onChangeText={(value) => handleInputChange('email', value)}
         keyboardType="email-address"
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Город"
-        value={formData.city}
-        onChangeText={(value) => handleInputChange('city', value)}
-      />
+      <Input placeholder="Город" value={formData.city} onChangeText={(value) => handleInputChange('city', value)} />
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Специальность"
         value={formData.specialty}
         onChangeText={(value) => handleInputChange('specialty', value)}

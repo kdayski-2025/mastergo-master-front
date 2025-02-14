@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { TextInput, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { Colors } from '../../shared/tokens';
 import Button from '../../components/Button/Button';
-import { styles } from './styled';
+import Input from '../../components/Input/Input';
+import styles from './styled';
 
 export default function SettingsScreen() {
   const [formData, setFormData] = useState({
@@ -33,25 +34,21 @@ export default function SettingsScreen() {
         <Text style={styles.subtitle}>Управление вашим аккаунтом</Text>
       </View>
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Город"
         placeholderTextColor={Colors.gray}
         value={formData.city}
         onChangeText={(value) => handleInputChange('city', value)}
       />
 
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Специальность"
         placeholderTextColor={Colors.gray}
         value={formData.specialty}
         onChangeText={(value) => handleInputChange('specialty', value)}
       />
 
-      <View style={styles.buttonContainer}>
-        <Button text="Сохранить изменения" onPress={handleSubmit} />
-      </View>
+      <Button text="Сохранить изменения" onPress={handleSubmit} />
     </View>
   );
 }
