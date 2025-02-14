@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
-import useUser from '../../hooks/useUser';
 import styles from './styled';
+import useLogin from '../../hooks/useLogin';
 
 export default function LoginScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
-  const { user } = useUser();
+  const { token } = useLogin();
 
   useEffect(() => {
+    if (token) {
+      navigation.navigate('Requests');
+    }
     if (submitted) {
-      if (!user) navigation.navigate('Pin');
-      else navigation.navigate('Main');
+      if (!token) navigation.navigate('Pin');
       setSubmitted(false);
     }
-  }, [user, submitted]);
+  }, [token, submitted]);
 
   return (
     <View style={styles.container}>

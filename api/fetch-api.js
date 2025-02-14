@@ -1,5 +1,6 @@
 import { simplifyErrorMessage } from '../lib/lib';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const convertToQueryParams = (params = {}) => {
 	let queryString = '';
@@ -10,8 +11,19 @@ const convertToQueryParams = (params = {}) => {
 	return queryString;
 };
 
+const getAuthToken = async () => {
+	try {
+		const token = await AsyncStorage.getItem('auth_token');
+		return token;
+	} catch (e) {
+		console.error('Failed to fetch the token from storage', e);
+		return null;
+	}
+};
+
 export const GET = (endpoint = '', params = {}) => {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
+		const token = await getAuthToken();
 		let url = Constants?.expoConfig?.api?.url
 		if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
 		url += '/api' + endpoint + convertToQueryParams(params);
@@ -20,7 +32,8 @@ export const GET = (endpoint = '', params = {}) => {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client'
+				'App-Version': Constants?.expoConfig?.userType || 'client',
+				'Authorization': token ? `Bearer ${token}` : ''
 			},
 		};
 		fetch(url, options)
@@ -44,7 +57,8 @@ export const GET = (endpoint = '', params = {}) => {
 };
 
 export const POST = (endpoint = '', data = {}) => {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
+		const token = await getAuthToken();
 		let url = Constants?.expoConfig?.api?.url
 		if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
 		url += '/api' + endpoint
@@ -53,7 +67,8 @@ export const POST = (endpoint = '', data = {}) => {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client'
+				'App-Version': Constants?.expoConfig?.userType || 'client',
+				'Authorization': token ? `Bearer ${token}` : ''
 			},
 			body: JSON.stringify(data),
 		};
@@ -79,7 +94,8 @@ export const POST = (endpoint = '', data = {}) => {
 };
 
 export const PUT = async (endpoint = '', data = {}) => {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
+		const token = await getAuthToken();
 		let url = Constants?.expoConfig?.api?.url
 		if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
 		url += '/api' + endpoint
@@ -88,7 +104,8 @@ export const PUT = async (endpoint = '', data = {}) => {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client'
+				'App-Version': Constants?.expoConfig?.userType || 'client',
+				'Authorization': token ? `Bearer ${token}` : ''
 			},
 			body: JSON.stringify(data),
 		};
