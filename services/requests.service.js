@@ -23,11 +23,11 @@ class RequestsService {
 		this.state$.next(this.state);
 
 		try {
-			const requests = await GET('/requests');
+			const response = await GET('/master/requests');
 			this.state = {
 				...this.state,
 				loading: false,
-				requests,
+				requests: response.data,
 			};
 			this.state$.next(this.state);
 		} catch (error) {
