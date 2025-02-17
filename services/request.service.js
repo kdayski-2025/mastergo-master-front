@@ -23,7 +23,7 @@ class RequestService {
 		this.state$.next(this.state);
 
 		try {
-			const request = await GET(`/requests/${id}`);
+			const request = await GET(`/master/requests/${id}`);
 			this.state = {
 				...this.state,
 				loading: false,
