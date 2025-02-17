@@ -27,4 +27,8 @@ export default StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'underline',
   },
+  phoneNumber: {
+    alignItems: 'stretch',
+    gap: Gaps.g40,
+  }
 });

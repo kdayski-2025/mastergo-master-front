@@ -2,6 +2,12 @@ import { simplifyErrorMessage } from '../lib/lib';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const headers = {
+	Accept: 'application/json',
+	'Content-Type': 'application/json',
+	'X-app-type': Constants?.expoConfig?.userType || 'client'
+}
+
 const convertToQueryParams = (params = {}) => {
 	let queryString = '';
 	Object.keys(params).forEach((key, index) => {
@@ -30,9 +36,7 @@ export const GET = (endpoint = '', params = {}) => {
 		const options = {
 			method: 'GET',
 			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client',
+				...headers,
 				'Authorization': token ? `Bearer ${token}` : ''
 			},
 		};
@@ -65,9 +69,7 @@ export const POST = (endpoint = '', data = {}) => {
 		const options = {
 			method: 'POST',
 			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client',
+				...headers,
 				'Authorization': token ? `Bearer ${token}` : ''
 			},
 			body: JSON.stringify(data),
@@ -87,7 +89,6 @@ export const POST = (endpoint = '', data = {}) => {
 			})
 			.catch((e) => {
 				const error = simplifyErrorMessage(e.message);
-				console.log(error);
 				reject(new Error(error));
 			});
 	});
@@ -102,9 +103,7 @@ export const PUT = async (endpoint = '', data = {}) => {
 		const options = {
 			method: 'PUT',
 			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'App-Version': Constants?.expoConfig?.userType || 'client',
+				...headers,
 				'Authorization': token ? `Bearer ${token}` : ''
 			},
 			body: JSON.stringify(data),

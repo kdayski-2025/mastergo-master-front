@@ -6,9 +6,7 @@ import LoginServiceInstance from '../../services/login.service';
 
 import { phoneNumberInputStyles } from './styled';
 
-export default function PhoneNumberInput({ setSubmitted }) {
-  const [phoneNumber, setPhoneNumber] = useState('+7 (800) 555-35-35');
-
+export default function PhoneNumberInput({ value, onChangeText, placeholder, ...props }) {
   const formatPhoneNumber = (input) => {
     const cleaned = input.replace(/\D/g, '');
 
@@ -33,34 +31,17 @@ export default function PhoneNumberInput({ setSubmitted }) {
 
   const handleInputChange = (text) => {
     const formatted = formatPhoneNumber(text);
-    setPhoneNumber(formatted);
-  };
-
-  const handleSubmit = async () => {
-    const isValid = phoneNumber.replace(/\D/g, '').length === 11 && phoneNumber.startsWith('+7');
-    if (isValid) {
-      await LoginServiceInstance.set({ phone: phoneNumber });
-      await LoginServiceInstance.auth({ phone: phoneNumber, code: '12345' });
-      setSubmitted(true);
-    } else {
-      Alert.alert(
-        'Phone Number',
-        'Invalid phone number. Please enter a valid number in the format +7 (XXX) XXX-XX-XX.'
-      );
-    }
+    onChangeText(formatted);
   };
 
   return (
-    <View style={phoneNumberInputStyles.container}>
-      <TextInput
-        style={phoneNumberInputStyles.input}
-        value={phoneNumber}
-        onChangeText={handleInputChange}
-        placeholder="+7 (XXX) XXX-XX-XX"
-        keyboardType="numeric"
-        maxLength={18}
-      />
-      <Button text="Продолжить" onPress={handleSubmit} />
-    </View>
+    <TextInput
+      style={phoneNumberInputStyles.input}
+      value={value}
+      onChangeText={handleInputChange}
+      placeholder={placeholder}
+      keyboardType="numeric"
+      maxLength={18}
+    />
   );
 }

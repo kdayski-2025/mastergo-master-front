@@ -19,4 +19,25 @@ export default StyleSheet.create({
     fontSize: 16,
     marginBottom: 24,
   },
+  input: {
+    borderWidth: 1,
+    borderColor: Colors.gray,
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    height: 50,
+    marginBottom: 15,
+    width: '100%',
+    textAlign: 'left',
+    position: 'relative',
+  },
+  pickerPlaceholder: {
+    opacity: 1,
+  },
+  placeholderText: {
+    color: Colors.gray,
+    textAlign: 'left',
+  },
 });

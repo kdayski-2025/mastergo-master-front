@@ -28,10 +28,6 @@ export const pinCodeStyles = StyleSheet.create({
 });
 
 export const phoneNumberInputStyles = StyleSheet.create({
-  container: {
-    alignItems: 'stretch',
-    gap: Gaps.g40,
-  },
   input: {
     height: 50,
     borderColor: Colors.gray,

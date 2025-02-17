@@ -7,23 +7,50 @@ import UserServiceInstance from '../../services/user.service';
 import useLogin from '../../hooks/useLogin';
 import useUser from '../../hooks/useUser';
 import styles from './styled';
+import CategoryServiceInstance from '../../services/category.service';
+import CitiesServiceInstance from '../../services/cities.service';
+import useCities from '../../hooks/useCities';
+import useCategory from '../../hooks/useCategory';
+import { Picker } from '@react-native-picker/picker';
+import { Colors } from '../../shared/tokens';
+import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
 
 export default function RegisterScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
   const { user } = useUser();
-  const { loginInfo } = useLogin();
+  const { loginInfo, token } = useLogin();
+  const { cities } = useCities();
+  const { categories } = useCategory();
   const [formData, setFormData] = useState({
-    fullName: '',
-    birthDate: '',
-    citizenship: '',
-    email: '',
-    city: '',
-    specialty: '',
+    phone: '',
+    fullName: 'Magomed Magomedov',
+    birthDate: '01.01.2000',
+    citizenship: 'Chechnya',
+    email: 'borba@mail.ru',
+    cityId: '',
+    masterTypeId: '',
   });
 
   useEffect(() => {
-    if (submitted) UserServiceInstance.get(loginInfo);
+    if (token) {
+      navigation.navigate('Main');
+    }
+  }, [token]);
+
+  useEffect(() => {
+    UserServiceInstance.get(loginInfo);
   }, [submitted, loginInfo]);
+
+  useEffect(() => {
+    CategoryServiceInstance.get();
+    CitiesServiceInstance.get();
+  }, []);
+
+  useEffect(() => {
+    if (loginInfo && loginInfo.phone) {
+      handleInputChange('phone', loginInfo.phone);
+    }
+  }, [loginInfo]);
 
   useEffect(() => {
     if (user) navigation.navigate('Main');
@@ -48,9 +75,9 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    const { fullName, birthDate, citizenship, email, city, specialty } = formData;
+    const { fullName, birthDate, citizenship, email, cityId, masterTypeId, phone } = formData;
 
-    if (!fullName || !birthDate || !citizenship || !email || !city || !specialty) {
+    if (!fullName || !birthDate || !citizenship || !email || !cityId || !masterTypeId || !phone) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
@@ -75,6 +102,9 @@ export default function RegisterScreen({ navigation }) {
       birth: birthDate,
       citizenship,
       email,
+      phone,
+      cityId,
+      masterTypeId,
     });
     await LoginServiceInstance.register();
     setSubmitted(true);
@@ -84,6 +114,12 @@ export default function RegisterScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Стать клиентом Mastergo</Text>
       <Text style={styles.subtitle}>Укажите ваши данные, чтобы использовать все функции приложения</Text>
+
+      <PhoneNumberInput
+        placeholder="+7 (XXX) XXX-XX-XX"
+        value={formData.phone}
+        onChangeText={(value) => handleInputChange('phone', value)}
+      />
 
       <Input
         placeholder="Фамилия, имя, отчество"
@@ -111,13 +147,41 @@ export default function RegisterScreen({ navigation }) {
         keyboardType="email-address"
       />
 
-      <Input placeholder="Город" value={formData.city} onChangeText={(value) => handleInputChange('city', value)} />
+      <View style={{ ...styles.input, paddingHorizontal: 0 }}>
+        <Picker
+          selectedValue={formData.cityId}
+          onValueChange={(value) => handleInputChange('cityId', value)}
+          style={{
+            ...styles.pickerPlaceholder,
+            color: formData.cityId ? Colors.black : Colors.gray,
+          }}
+          dropdownIconColor={Colors.gray}
+          mode="dialog"
+        >
+          <Picker.Item label="Город" value={null} style={styles.placeholderText} />
+          {cities.map((type) => (
+            <Picker.Item key={type.id} label={type.name} value={type.id} />
+          ))}
+        </Picker>
+      </View>
 
-      <Input
-        placeholder="Специальность"
-        value={formData.specialty}
-        onChangeText={(value) => handleInputChange('specialty', value)}
-      />
+      <View style={{ ...styles.input, paddingHorizontal: 0 }}>
+        <Picker
+          selectedValue={formData.masterTypeId}
+          onValueChange={(value) => handleInputChange('masterTypeId', value)}
+          style={{
+            ...styles.pickerPlaceholder,
+            color: formData.masterTypeId ? Colors.black : Colors.gray,
+          }}
+          dropdownIconColor={Colors.gray}
+          mode="dialog"
+        >
+          <Picker.Item label="Город" value={null} style={styles.placeholderText} />
+          {categories.map((type) => (
+            <Picker.Item key={type.id} label={type.name} value={type.id} />
+          ))}
+        </Picker>
+      </View>
 
       <Button text="Продолжить" onPress={handleSubmit} />
     </View>
