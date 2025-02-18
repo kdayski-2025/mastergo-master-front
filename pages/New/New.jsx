@@ -42,15 +42,16 @@ export default function NewScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header} />
+      <Map target={target} setMapLoading={setMapLoading} />
       <ScrollView contentContainerStyle={styles.content}>
-        <Map target={target} setMapLoading={setMapLoading} />
         {!requests.length && <EmptyContent title={'Нет активных заказов'} />}
         {requests.map((request, index) => (
           <Card key={index} onPress={() => handlePress(request)} state={active === request.id ? 'target' : 'default'}>
             <Text type={'title'}>{request.masterType.name}</Text>
             <Text type={'description'}>{request.description}</Text>
             <Text type={'description'}>{request.address}</Text>
-            <Text type={'price'}>2000р</Text>
+            <Text type={'description'}>{request.requestType}</Text>
+            {request.price ? <Text type={'price'}>{request.price}р</Text> : <></>}
           </Card>
         ))}
       </ScrollView>

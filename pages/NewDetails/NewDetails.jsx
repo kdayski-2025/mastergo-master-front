@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, Alert, ScrollView, Pressable } from 'react-native';
 import Button from '../../components/Button/Button';
 import RequestServiceInstance from '../../services/request.service';
@@ -10,6 +11,7 @@ import styles from './styled';
 import Input from '../../components/Input/Input';
 
 export default function NewDetailsScreen({ route }) {
+  const navigation = useNavigation();
   const { id } = route.params;
   const { user } = useUser();
   const { request } = useRequest();
@@ -38,7 +40,7 @@ export default function NewDetailsScreen({ route }) {
       comment: 'Сделаю быстро и качественно',
       masterId: user.id,
     });
-    Alert.alert('Ваш ответ отправлен');
+    navigation.navigate('Active', { id: request.id });
   };
 
   return (
