@@ -23,7 +23,7 @@ class OfferService {
 		this.state$.next(this.state);
 
 		try {
-			await POST(`/master/requests/${id}/offers`, data);
+			await POST(`/master/requests/${id}/offer`, data);
 			this.state = {
 				...this.state,
 				loading: false,

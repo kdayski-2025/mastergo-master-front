@@ -37,7 +37,7 @@ export default function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Активные"
+        name="Active"
         component={ActiveScreen}
         options={{
           tabBarIcon: ({ color, size }) => <ActiveIcon width={size} height={size} fill={color} />,
