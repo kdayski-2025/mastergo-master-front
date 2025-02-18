@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "api": {
       "url": "http://mars1.fanil.ru",
-      "port": "8002",
+      "port": "8001",
       "assets": "/assets/requests"
     },
     "userType": "master",

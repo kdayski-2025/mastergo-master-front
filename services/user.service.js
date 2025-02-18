@@ -25,7 +25,7 @@ class UserService {
 			this.state$.next({
 				loading: false,
 				error: result.error,
-				user: result.user
+				user: result.data
 			});
 		} catch (error) {
 			this.state$.next({
