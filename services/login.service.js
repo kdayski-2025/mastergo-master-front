@@ -43,7 +43,7 @@ class LoginService {
 				error: result.error,
 				token: result?.data?.token,
 			};
-			if (result?.data?.token) await AsyncStorage.setItem('auth_token', result.data.token);
+			result?.data?.token ? await AsyncStorage.setItem('auth_token', result?.data?.token) : await AsyncStorage.removeItem('auth_token');
 			this.state$.next(this.state);
 		} catch (error) {
 			this.state = {
