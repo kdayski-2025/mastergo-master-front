@@ -23,7 +23,6 @@ class UserService {
 
     try {
       const result = await GET('/user', body);
-      // console.log(body);
       this.state$.next({
         loading: false,
         error: result.error,
@@ -39,7 +38,7 @@ class UserService {
     }
   }
 
-  async getProfile(id) {
+  async getProfile() {
     if (this.state$.value.loading) {
       return;
     }
@@ -50,7 +49,7 @@ class UserService {
     });
 
     try {
-      const result = await GET(`/user/profile/${id}`);
+      const result = await GET(`/user/profile`);
       this.state$.next({
         loading: false,
         error: result.error,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import NewScreen from '../../pages/New/New';
 import ActiveScreen from '../../pages/Active/Active';
@@ -7,6 +8,7 @@ import SettingsScreen from '../../pages/Settings/Settings';
 import ProfileScreen from '../../pages/Profile/Profile';
 import NewDetailsScreen from '../../pages/NewDetails/NewDetails';
 import ActiveDetailsScreen from '../../pages/ActiveDetails/ActiveDetails';
+import ReviewsScreen from '../../pages/Reviews/Reviews';
 
 import { Colors } from '../../shared/tokens';
 import { tabRouterStyles } from './styled';
@@ -16,8 +18,9 @@ import SettingsIcon from '../../assets/icons/settings.svg';
 import ProfileIcon from '../../assets/icons/profile.svg';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function TabNavigator() {
+function TabScreens() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -33,46 +36,56 @@ export default function TabNavigator() {
         name="Новые"
         component={NewScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <NewIcon width={size} height={size} fill={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <NewIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Active"
         component={ActiveScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <ActiveIcon width={size} height={size} fill={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <ActiveIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Настройки"
         component={SettingsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <SettingsIcon width={size} height={size} fill={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <SettingsIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Профиль"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <ProfileIcon width={size} height={size} fill={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="NewDetails"
-        component={NewDetailsScreen}
-        options={{
-          tabBarButton: () => null,
-          tabBarItemStyle: { display: 'none' },
-        }}
-      />
-      <Tab.Screen
-        name="ActiveDetails"
-        component={ActiveDetailsScreen}
-        options={{
-          tabBarButton: () => null,
-          tabBarItemStyle: { display: 'none' },
+          tabBarIcon: ({ color, size }) => (
+            <ProfileIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+export default function TabNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        animation: 'none',
+      }}
+    >
+      <Stack.Screen name="TabScreens" component={TabScreens} />
+      <Stack.Screen name="NewDetails" component={NewDetailsScreen} />
+      <Stack.Screen name="ActiveDetails" component={ActiveDetailsScreen} />
+      <Stack.Screen name="Reviews" component={ReviewsScreen} />
+    </Stack.Navigator>
   );
 }

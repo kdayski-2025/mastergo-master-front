@@ -29,4 +29,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
+  reviews: {
+    color: Colors.greenDark,
+    fontSize: 16,
+    lineHeight: 22,
+  },
 });

@@ -18,123 +18,29 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function Profile() {
   const { userProfile } = useUser();
+  const [activeTab, setActiveTab] = useState('open');
   const navigation = useNavigation();
-  const mmr = 3.5;
-
   const { requests, loading } = useRequests();
   const tabs = [
-    { title: 'Новые', value: 'new' },
-    { title: 'Активные', value: 'active' },
+    { title: 'Новые', value: 'open' },
+    { title: 'Активные', value: 'in_progress' },
     { title: 'Выполненные', value: 'completed' },
-  ];
-  const activeRequests = [
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне активно!',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
-  ];
-  const completedRequests = [
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне выполнено!',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
-    {
-      id: '8ebf0a86-a330-4705-9706-7712b0e71963',
-      internalId: 6,
-      address: 'Москва, ул. Пушкина, д.10 сперма',
-      latitude: 11,
-      longitude: 11,
-      masterType: 1,
-      description: 'Протечка крана на кухне',
-      photos: ['1738578360002_photo_2024-11-14_13-37-11.jpg'],
-      requestType: 'auction',
-      status: 'open',
-      createdAt: '2025-02-03T10:26:00.061Z',
-      updatedAt: '2025-02-03T10:26:00.061Z',
-      userId: 1,
-    },
   ];
 
   useEffect(() => {
-    UserServiceInstance.getProfile(3);
+    UserServiceInstance.getProfile();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      RequestsServiceInstance.get();
-      return () => {};
-    }, [])
-  );
+  useEffect(() => {
+    RequestsServiceInstance.get({ status: activeTab });
+  }, [activeTab]);
 
   const handlePress = (type, id) => {
     navigation.navigate(type, { id });
+  };
+
+  const handlePressReviews = (data) => {
+    navigation.navigate('Reviews', { data });
   };
 
   const renderStars = (rating) => {
@@ -177,6 +83,10 @@ export default function Profile() {
     return stars;
   };
 
+  const handleTabChange = (tabValue) => {
+    setActiveTab(tabValue);
+  };
+
   return (
     <View style={styles.container}>
       {userProfile && (
@@ -188,7 +98,7 @@ export default function Profile() {
           <Text style={styles.title}>{userProfile.name}</Text>
           <Text style={styles.title}>+{userProfile.phone}</Text>
           <View style={styles.ratingContainer}>
-            <Text style={styles.title}>{mmr}</Text>
+            <Text style={styles.title}>{userProfile.rating}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -196,63 +106,73 @@ export default function Profile() {
                 marginBottom: 6,
               }}
             >
-              {renderStars(mmr)}
+              {renderStars(userProfile.rating)}
             </View>
           </View>
+          <Text
+            style={styles.reviews}
+            onPress={() => handlePressReviews(userProfile)}
+          >
+            {userProfile.rewiews.length} отзывы
+          </Text>
         </View>
       )}
       {!loading ? (
         <View>
           <Text style={styles.title}>Заказы</Text>
-          <Tabs tabs={tabs}>
-            <Tab value={'new'}>
-              {requests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() => handlePress('NewDetails', request.id)}
-                >
-                  <Text type={'title'}>{request.masterType.name}</Text>
-                  <Text type={'description'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))}
+          <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
+            <Tab value={'open'} activeTab={activeTab}>
+              {requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('NewDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )}
             </Tab>
-            <Tab value={'active'}>
-              {activeRequests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() =>
-                    handlePress(
-                      'ActiveDetails',
-                      'ed0a3f0b-50cf-4ab7-b737-6b1a01084024'
-                    )
-                  }
-                >
-                  {/* <Text type={'title'}>{request.masterType.name}</Text> */}
-                  <Text type={'title'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))}
+
+            <Tab value={'in_progress'} activeTab={activeTab}>
+              {requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('ActiveDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )}
             </Tab>
-            <Tab value={'completed'}>
-              {completedRequests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() =>
-                    handlePress(
-                      'ActiveDetails',
-                      'ed0a3f0b-50cf-4ab7-b737-6b1a01084024'
-                    )
-                  }
-                >
-                  {/* <Text type={'title'}>{request.masterType.name}</Text> */}
-                  <Text type={'title'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))}
+
+            <Tab value={'completed'} activeTab={activeTab}>
+              {requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('ActiveDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )}
             </Tab>
           </Tabs>
         </View>

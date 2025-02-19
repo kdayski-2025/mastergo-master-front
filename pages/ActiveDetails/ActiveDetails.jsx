@@ -26,7 +26,10 @@ export default function ActiveDetailsScreen({ route }) {
           </View>
           <View>
             {request.photos?.map((photo, index) => (
-              <Image key={index} source={{ uri: `${getAssetUrl()}/${photo}` }} />
+              <Image
+                key={index}
+                source={{ uri: `${getAssetUrl()}/${photo}` }}
+              />
             ))}
           </View>
         </>
