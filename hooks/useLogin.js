@@ -7,6 +7,7 @@ const useLogin = () => {
   const [error, setError] = useState(null);
   const [loginInfo, setLoginInfo] = useState(null);
   const [token, setToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null)
 
   useEffect(() => {
     const login$ = LoginServiceInstance.state$.subscribe((state) => {
@@ -14,6 +15,7 @@ const useLogin = () => {
       setError(state.error);
       setLoginInfo(state.loginInfo);
       setToken(state.token);
+      setRefreshToken(state.refreshToken)
     });
 
     return () => {
@@ -25,6 +27,9 @@ const useLogin = () => {
     AsyncStorage.getItem('auth_token').then((token) => {
       setToken(token);
     });
+    AsyncStorage.getItem('refresh_token').then((refreshToken) => {
+      setRefreshToken(refreshToken);
+    });
   }, []);
 
   return {
@@ -32,6 +37,7 @@ const useLogin = () => {
     loading,
     loginInfo,
     token,
+    refreshToken
   };
 };
 

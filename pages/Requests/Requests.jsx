@@ -9,7 +9,7 @@ import useRequests from '../../hooks/useRequests';
 import EmptyContent from '../../components/EmptyContent/EmptyContent';
 import Map from '../../components/Map/Map';
 
-export default function NewScreen() {
+export default function RequestsScreen() {
   const navigation = useNavigation();
   const { requests } = useRequests();
   const [target, setTarget] = useState(null);
@@ -25,7 +25,7 @@ export default function NewScreen() {
         },
       });
       if (active === request.id) {
-        navigation.navigate('NewDetails', { id: request.id });
+        navigation.navigate('RequestDetails', { id: request.id });
       } else {
         setActive(request.id);
       }
@@ -48,20 +48,12 @@ export default function NewScreen() {
           <EmptyContent title={'Нет активных заказов'} />
         ) : (
           requests.map((request, index) => (
-            <Card
-              key={index}
-              onPress={() => handlePress(request)}
-              state={active === request.id ? 'target' : 'default'}
-            >
+            <Card key={index} onPress={() => handlePress(request)} state={active === request.id ? 'target' : 'default'}>
               <Text type={'title'}>{request.masterType.name}</Text>
               <Text type={'description'}>{request.description}</Text>
               <Text type={'description'}>{request.address}</Text>
               <Text type={'description'}>{request.requestType}</Text>
-              {request.price ? (
-                <Text type={'price'}>{request.price}р</Text>
-              ) : (
-                <></>
-              )}
+              {request.price ? <Text type={'price'}>{request.price}р</Text> : <></>}
             </Card>
           ))
         )}

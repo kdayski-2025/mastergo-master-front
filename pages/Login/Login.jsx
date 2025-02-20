@@ -5,18 +5,20 @@ import styles from './styled';
 import useLogin from '../../hooks/useLogin';
 import LoginServiceInstance from '../../services/login.service';
 import Button from '../../components/Button/Button';
+import UserServiceInstance from '../../services/user.service';
 
 export default function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('+7 (800) 555-35-35');
   const [submitted, setSubmitted] = useState(false);
-  const { token } = useLogin();
+  const { token, refreshToken } = useLogin();
 
   useEffect(() => {
-    if (token) {
+    if (token && refreshToken) {
+      UserServiceInstance.getProfile();
       navigation.navigate('Main');
     }
     if (submitted) {
-      if (!token) navigation.navigate('Pin');
+      if (!token && !refreshToken) navigation.navigate('Pin');
       setSubmitted(false);
     }
   }, [token, submitted]);
