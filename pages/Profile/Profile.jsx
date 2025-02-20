@@ -126,7 +126,7 @@ export default function Profile() {
                 requests.map((request, index) => (
                   <Card
                     key={index}
-                    onPress={() => handlePress('NewDetails', request.id)}
+                    onPress={() => handlePress('RequestDetails', request.id)}
                   >
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>
@@ -144,7 +144,7 @@ export default function Profile() {
                 requests.map((request, index) => (
                   <Card
                     key={index}
-                    onPress={() => handlePress('ActiveDetails', request.id)}
+                    onPress={() => handlePress('RequestDetails', request.id)}
                   >
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>
@@ -162,7 +162,7 @@ export default function Profile() {
                 requests.map((request, index) => (
                   <Card
                     key={index}
-                    onPress={() => handlePress('ActiveDetails', request.id)}
+                    onPress={() => handlePress('RequestDetails', request.id)}
                   >
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>

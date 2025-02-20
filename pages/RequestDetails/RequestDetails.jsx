@@ -3,11 +3,11 @@ import { View, Text, Image, Alert, ScrollView, Pressable } from 'react-native';
 import Button from '../../components/Button/Button';
 import RequestServiceInstance from '../../services/request.service';
 import useRequest from '../../hooks/useRequest';
-import { getAssetUrl } from '../../lib/lib';
 import useUser from '../../hooks/useUser';
 import styles from './styled';
 import Input from '../../components/Input/Input';
 import Chat from '../../components/Chat/Chat';
+import DescriptionRequest from '../../components/DescriptionRequest/DescriptionRequest';
 
 export default function RequestDetailsScreen({ route }) {
   const { id } = route.params;
@@ -50,63 +50,60 @@ export default function RequestDetailsScreen({ route }) {
       <View style={styles.header} />
       {request && (
         <>
-          <View style={styles.section}>
-            <Text style={styles.title}>Описание заказа</Text>
-            <Text style={styles.description}>{request.description}</Text>
-            <Text style={styles.address}>{request.address}</Text>
-          </View>
-
-          {request.photos?.length > 0 && (
-            <View style={styles['photo-section']}>
-              <Text style={styles.title}>Фотографии</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {request.photos.map((photo, index) => (
-                  <Pressable key={index} onPress={() => console.log('Open photo')}>
-                    <Image source={{ uri: `${getAssetUrl()}/${photo}` }} style={styles.thumbnail} resizeMode="cover" />
-                  </Pressable>
-                ))}
-              </ScrollView>
-            </View>
-          )}
-
+          <DescriptionRequest
+            description={request.description}
+            address={request.address}
+            photos={request.photos}
+          />
           {!offer && (
-            <View style={styles['price-section']}>
-              {request.requestType === 'auction' && (
-                <Input
-                  style={styles.input}
-                  keyboardType="numeric"
-                  placeholder="Ваша цена"
-                  value={formData.price}
-                  onChangeText={handleChange}
-                />
-              )}
+            <View style={styles.wrapper}>
+              <View style={styles['price-section']}>
+                {request.requestType === 'auction' && (
+                  <Input
+                    style={styles.input}
+                    keyboardType="numeric"
+                    placeholder="Ваша цена"
+                    value={formData.price}
+                    onChangeText={handleChange}
+                  />
+                )}
 
-              <Button text="Принять" onPress={handleAccept} />
+                <Button text="Принять" onPress={handleAccept} />
+              </View>
             </View>
           )}
           {offer && offer.status === 'pending' && (
-            <View>
+            <View style={styles.wrapper}>
               <Text>Ваша заявка на рассмотрении</Text>
             </View>
           )}
           {offer && offer.status === 'rejected' && (
-            <View>
+            <View style={styles.wrapper}>
               <Text>Ваша заявка отклонена</Text>
             </View>
           )}
           {offer && request.status === 'in_progress' && (
-            <View>
+            <View style={styles.wrapper}>
               <Button text={'Завершить работу'} onPress={handleComplete} />
               <Chat requestId={id} />
             </View>
           )}
-          {offer && request.status === 'completed' && !offer.status === 'rejected' && (
-            <View>
-              <Text>Вы завершили эту заявку</Text>
-              <Text>Выплата {offer.price} руб.</Text>
-              <Text>Написать отзыв (нужен функционал)</Text>
-            </View>
-          )}
+          {offer &&
+            request.status === 'completed' &&
+            !offer.status === 'rejected' && (
+              <View style={styles.wrapper}>
+                <Text>Вы завершили эту заявку</Text>
+                <Text>Выплата {offer.price} руб.</Text>
+                <Text>Написать отзыв (нужен функционал)</Text>
+              </View>
+            )}
+          {offer &&
+            request.status === 'completed' &&
+            offer.status === 'rejected' && (
+              <View style={styles.wrapper}>
+                <Text>Ваша заявка отклонена мастером</Text>
+              </View>
+            )}
         </>
       )}
     </View>
