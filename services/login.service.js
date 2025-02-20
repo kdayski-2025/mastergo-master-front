@@ -34,46 +34,17 @@ class LoginService {
     };
     this.state$.next(this.state);
 
-<<<<<<< HEAD
-		try {
-			const result = await POST('/auth/login', data);
-			console.log(result.data);
-			if (result?.data?.user) UserServiceInstance.state$.next({ ...UserServiceInstance.state$, user: result.data.user });
-			this.state = {
-				...this.state,
-				loading: false,
-				error: result.error,
-				token: result?.data?.token,
-			};
-			result?.data?.token ? await AsyncStorage.setItem('auth_token', result?.data?.token) : await AsyncStorage.removeItem('auth_token');
-			this.state$.next(this.state);
-		} catch (error) {
-			this.state = {
-				...this.state,
-				loading: false,
-				error: error.message,
-			};
-			this.state$.next(this.state);
-			throw new Error(error.message);
-		}
-	}
-=======
     try {
       const result = await POST('/auth/login', data);
-      if (result?.data?.user)
-        UserServiceInstance.state$.next({
-          ...UserServiceInstance.state$,
-          user: result.data.user,
-        });
+      console.log(result.data);
+      if (result?.data?.user) UserServiceInstance.state$.next({ ...UserServiceInstance.state$, user: result.data.user });
       this.state = {
         ...this.state,
         loading: false,
         error: result.error,
         token: result?.data?.token,
       };
-      result?.data?.token
-        ? await AsyncStorage.setItem('auth_token', result?.data?.token)
-        : await AsyncStorage.removeItem('auth_token');
+      result?.data?.token ? await AsyncStorage.setItem('auth_token', result?.data?.token) : await AsyncStorage.removeItem('auth_token');
       this.state$.next(this.state);
     } catch (error) {
       this.state = {
@@ -85,7 +56,6 @@ class LoginService {
       throw new Error(error.message);
     }
   }
->>>>>>> 0aae67afe5dfeb390dab07335c29c8fdd091175e
 
   async register() {
     if (this.state.loading) {
