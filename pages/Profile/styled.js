@@ -21,6 +21,17 @@ export default StyleSheet.create({
   },
   header: {
     marginTop: Gaps.g40,
+
     marginBottom: 12,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  reviews: {
+    color: Colors.greenDark,
+    fontSize: 16,
+    lineHeight: 22,
   },
 });

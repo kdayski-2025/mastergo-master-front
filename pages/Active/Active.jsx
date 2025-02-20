@@ -1,11 +1,14 @@
 import React from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import styles from './styled';
 
 import Card from '../../components/Card/Card';
 
 export default function ActiveScreen() {
+  const navigation = useNavigation();
+
   const requests = [
     {
       id: '8ebf0a86-a330-4705-9706-7712b0e71963',
@@ -53,7 +56,9 @@ export default function ActiveScreen() {
       userId: 1,
     },
   ];
-
+  const handlePress = (type, id) => {
+    navigation.navigate(type, { id });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header} />
@@ -66,12 +71,18 @@ export default function ActiveScreen() {
         {requests.map((request, index) => (
           <Card
             key={index}
-            index={index}
-            description={request.description}
-            address={request.address}
-            type={'ActiveDetails'}
-            id={request.id}
-          />
+            onPress={() =>
+              handlePress(
+                'ActiveDetails',
+                'ed0a3f0b-50cf-4ab7-b737-6b1a01084024'
+              )
+            }
+          >
+            {/* <Text type={'title'}>{request.masterType.name}</Text> */}
+            <Text type={'title'}>{request.description}</Text>
+            <Text type={'description'}>{request.address}</Text>
+            <Text type={'price'}>2000р</Text>
+          </Card>
         ))}
       </ScrollView>
     </View>

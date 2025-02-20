@@ -2,40 +2,68 @@ import { BehaviorSubject } from 'rxjs';
 import { GET } from '../api/fetch-api';
 
 class UserService {
-	initialState = {
-		loading: false,
-		error: null,
-		user: null
-	};
+  initialState = {
+    loading: false,
+    error: null,
+    user: null,
+    userProfile: null,
+  };
 
-	state$ = new BehaviorSubject(this.initialState);
+  state$ = new BehaviorSubject(this.initialState);
 
-	async get(body) {
-		if (this.state$.value.loading) {
-			return;
-		}
+  async get(body) {
+    if (this.state$.value.loading) {
+      return;
+    }
 
-		this.state$.next({
-			...this.initialState,
-			loading: true,
-		});
+    this.state$.next({
+      ...this.initialState,
+      loading: true,
+    });
 
-		try {
-			const result = await GET('/user', body);
-			this.state$.next({
-				loading: false,
-				error: result.error,
-				user: result.data
-			});
-		} catch (error) {
-			this.state$.next({
-				loading: false,
-				error: error.message,
-				user: null
-			});
-			throw new Error(error.message);
-		}
-	}
+    try {
+      const result = await GET('/user', body);
+      this.state$.next({
+        loading: false,
+        error: result.error,
+        user: result.data,
+      });
+    } catch (error) {
+      this.state$.next({
+        loading: false,
+        error: error.message,
+        user: null,
+      });
+      throw new Error(error.message);
+    }
+  }
+
+  async getProfile() {
+    if (this.state$.value.loading) {
+      return;
+    }
+
+    this.state$.next({
+      ...this.initialState,
+      loading: true,
+    });
+
+    try {
+      const result = await GET(`/user/profile`);
+      this.state$.next({
+        loading: false,
+        error: result.error,
+        userProfile: result.data,
+      });
+    } catch (error) {
+      this.state$.next({
+        loading: false,
+        error: error.message,
+        userProfile: null,
+      });
+      throw new Error(error.message);
+    }
+  }
 }
 
 const UserServiceInstance = new UserService();
