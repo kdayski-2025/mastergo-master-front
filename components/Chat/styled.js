@@ -5,9 +5,9 @@ export default StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.gray50,
-		paddingTop: 40,
 	},
 	messagesList: {
+		flexGrow: 1,
 		padding: Gaps.g16,
 	},
 	messageContainer: {

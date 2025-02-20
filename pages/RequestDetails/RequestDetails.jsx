@@ -85,7 +85,9 @@ export default function RequestDetailsScreen({ route }) {
           {offer && request.status === 'in_progress' && (
             <View style={styles.wrapper}>
               <Button text={'Завершить работу'} onPress={handleComplete} />
-              <Chat requestId={id} />
+              <View style={styles.chatWrapper}>
+                <Chat requestId={id} />
+              </View>
             </View>
           )}
           {offer &&

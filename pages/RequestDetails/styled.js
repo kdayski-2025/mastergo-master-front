@@ -21,6 +21,11 @@ export default StyleSheet.create({
   wrapper: {
     paddingLeft: Gaps.g12,
     paddingRight: Gaps.g12,
+    flex: 1,
+  },
+  chatWrapper: {
+    flex: 1,
+    marginTop: Gaps.g24,
   },
   'photo-section': {
     flexDirection: 'row',

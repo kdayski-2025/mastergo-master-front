@@ -17,9 +17,9 @@ export default function ActiveDetailsScreen({ requestId }) {
     const isClient = item.user?.role === 'client';
 
     return (
-      <View style={[styles.messageContainer, isClient ? styles.rightMessage : styles.leftMessage]}>
-        {!isClient && item.masterName && <Text style={styles.senderName}>{item.masterName}</Text>}
-        <Text style={[styles.messageText, isClient ? styles.rightMessageText : styles.leftMessageText]}>
+      <View style={[styles.messageContainer, isClient ? styles.leftMessage : styles.rightMessage]}>
+        {isClient && item.user?.name && <Text style={styles.senderName}>{item.user.name}</Text>}
+        <Text style={[styles.messageText, isClient ? styles.leftMessageText : styles.rightMessageText]}>
           {item.text}
         </Text>
         <Text style={styles.messageTime}>
@@ -52,13 +52,18 @@ export default function ActiveDetailsScreen({ requestId }) {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
+    >
       <FlatList
         data={messages}
         renderItem={renderMessage}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.messagesList}
         extraData={messages}
+        keyboardDismissMode="interactive"
       />
       <View style={styles.inputContainer}>
         <Input
