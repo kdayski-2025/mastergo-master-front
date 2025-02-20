@@ -36,6 +36,7 @@ class LoginService {
 
 		try {
 			const result = await POST('/auth/login', data);
+			console.log(result.data);
 			if (result?.data?.user) UserServiceInstance.state$.next({ ...UserServiceInstance.state$, user: result.data.user });
 			this.state = {
 				...this.state,
