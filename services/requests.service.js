@@ -27,7 +27,7 @@ class RequestsService {
       this.state = {
         ...this.state,
         loading: false,
-        requests: response.data,
+        requests: response?.data,
       };
       this.state$.next(this.state);
     } catch (error) {

@@ -113,6 +113,8 @@ export default function RequestDetailsScreen({ route }) {
           {offer && request.status === 'completed' && offer.status === 'accepted' && (
             <View style={styles.wrapperFeedback}>
               <Text>Вы завершили эту заявку</Text>
+              {request.requestType === 'auction' && <Text>Выплата {offer.price} руб.</Text>}
+              {request.requestType === 'fixed' && <Text>Выплата {request.price} руб.</Text>}
               <Feedback handleSendFeedback={handleSendFeedback} requestId={id} />
             </View>
           )}

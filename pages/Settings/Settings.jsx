@@ -9,15 +9,20 @@ import useCities from '../../hooks/useCities';
 import { Picker } from '@react-native-picker/picker';
 import LoginServiceInstance from '../../services/login.service';
 import useUser from '../../hooks/useUser';
+import CategoryServiceInstance from '../../services/category.service';
+import useCategory from '../../hooks/useCategory';
 
 export default function SettingsScreen() {
   const { cities } = useCities();
+  const { categories } = useCategory();
   const { user } = useUser();
   const [formData, setFormData] = useState({
     cityId: '',
+    masterTypeId: '',
   });
 
   useEffect(() => {
+    CategoryServiceInstance.get();
     CitiesServiceInstance.get();
   }, []);
 
@@ -26,14 +31,15 @@ export default function SettingsScreen() {
   };
 
   const handleSubmit = async () => {
-    const { cityId } = formData;
+    const { cityId, masterTypeId } = formData;
 
-    if (!cityId) {
+    if (!cityId || !masterTypeId) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
     await LoginServiceInstance.set({
       cityId,
+      masterTypeId,
     });
     await LoginServiceInstance.edit();
     Alert.alert('Насяльникамана на стройка поменял');
@@ -42,6 +48,7 @@ export default function SettingsScreen() {
   useEffect(() => {
     setFormData({
       cityId: user?.cityId,
+      masterTypeId: user?.masterTypeId,
     });
   }, [user]);
 
@@ -65,6 +72,24 @@ export default function SettingsScreen() {
         >
           <Picker.Item label="Город" value={null} style={styles.placeholderText} />
           {cities.map((type) => (
+            <Picker.Item key={type.id} label={type.name} value={type.id} />
+          ))}
+        </Picker>
+      </View>
+
+      <View style={{ ...styles.input, paddingHorizontal: 0 }}>
+        <Picker
+          selectedValue={formData.masterTypeId}
+          onValueChange={(value) => handleInputChange('masterTypeId', value)}
+          style={{
+            ...styles.pickerPlaceholder,
+            color: formData.masterTypeId ? Colors.black : Colors.gray,
+          }}
+          dropdownIconColor={Colors.gray}
+          mode="dialog"
+        >
+          <Picker.Item label="Тип работы" value={null} style={styles.placeholderText} />
+          {categories.map((type) => (
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}
         </Picker>
