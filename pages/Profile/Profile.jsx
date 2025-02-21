@@ -18,11 +18,10 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function Profile() {
   const { userProfile } = useUser();
-  const [activeTab, setActiveTab] = useState('open');
+  const [activeTab, setActiveTab] = useState('in_progress');
   const navigation = useNavigation();
   const { requests, loading } = useRequests();
   const tabs = [
-    { title: 'Новые', value: 'open' },
     { title: 'Активные', value: 'in_progress' },
     { title: 'Выполненные', value: 'completed' },
   ];
@@ -117,68 +116,65 @@ export default function Profile() {
           </Text>
         </View>
       )}
-      {!loading ? (
-        <View>
-          <Text style={styles.title}>Заказы</Text>
-          <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
-            <Tab value={'open'} activeTab={activeTab}>
-              {requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
-              ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )}
-            </Tab>
 
-            <Tab value={'in_progress'} activeTab={activeTab}>
-              {requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
-              ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )}
-            </Tab>
+      <View>
+        <Text style={styles.title}>Заказы</Text>
+        <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
+          <Tab value={'open'} activeTab={activeTab}>
+            {!loading && requests && requests.length > 0 ? (
+              requests.map((request, index) => (
+                <Card
+                  key={index}
+                  onPress={() => handlePress('RequestDetails', request.id)}
+                >
+                  <Text type={'title'}>{request.masterType.name}</Text>
+                  <Text type={'description'}>{request.description}</Text>
+                  <Text type={'description'}>{request.address}</Text>
+                  <Text type={'price'}>2000р</Text>
+                </Card>
+              ))
+            ) : (
+              <Text type={'title'}>Заказов нет!</Text>
+            )}
+          </Tab>
 
-            <Tab value={'completed'} activeTab={activeTab}>
-              {requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
-              ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )}
-            </Tab>
-          </Tabs>
-        </View>
-      ) : (
-        <Text style={styles.title}>Loading...</Text>
-      )}
+          <Tab value={'in_progress'} activeTab={activeTab}>
+            {requests && requests.length > 0 ? (
+              requests.map((request, index) => (
+                <Card
+                  key={index}
+                  onPress={() => handlePress('RequestDetails', request.id)}
+                >
+                  <Text type={'title'}>{request.masterType.name}</Text>
+                  <Text type={'description'}>{request.description}</Text>
+                  <Text type={'description'}>{request.address}</Text>
+                  <Text type={'price'}>2000р</Text>
+                </Card>
+              ))
+            ) : (
+              <Text type={'title'}>Заказов нет!</Text>
+            )}
+          </Tab>
+
+          <Tab value={'completed'} activeTab={activeTab}>
+            {!loading && requests && requests.length > 0 ? (
+              requests.map((request, index) => (
+                <Card
+                  key={index}
+                  onPress={() => handlePress('RequestDetails', request.id)}
+                >
+                  <Text type={'title'}>{request.masterType.name}</Text>
+                  <Text type={'description'}>{request.description}</Text>
+                  <Text type={'description'}>{request.address}</Text>
+                  <Text type={'price'}>2000р</Text>
+                </Card>
+              ))
+            ) : (
+              <Text type={'title'}>Заказов нет!</Text>
+            )}
+          </Tab>
+        </Tabs>
+      </View>
     </View>
   );
 }

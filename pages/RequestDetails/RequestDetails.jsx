@@ -8,6 +8,8 @@ import styles from './styled';
 import Input from '../../components/Input/Input';
 import Chat from '../../components/Chat/Chat';
 import DescriptionRequest from '../../components/DescriptionRequest/DescriptionRequest';
+import UserServiceInstance from '../../services/user.service';
+import Feedback from '../../components/Feedback/Feedback';
 
 export default function RequestDetailsScreen({ route }) {
   const { id } = route.params;
@@ -17,6 +19,10 @@ export default function RequestDetailsScreen({ route }) {
     price: '',
     comment: '',
   });
+  // useEffect(() => {
+  //   console.log('request', request.status);
+  //   console.log('offer', offer.status);
+  // }, [offer, request]);
 
   const handleChange = (value) => {
     setFormData({ price: value });
@@ -50,12 +56,19 @@ export default function RequestDetailsScreen({ route }) {
     });
   };
 
+  const handleSendFeedback = (data) => {
+    UserServiceInstance.sendFeedback(data);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header} />
       {request && (
         <>
-          <DescriptionRequest description={request.description} address={request.address} photos={request.photos} />
+          <DescriptionRequest
+            description={request.description}
+            address={request.address}
+            photos={request.photos}
+          />
           {!offer && (
             <View style={styles.wrapper}>
               <View style={styles['price-section']}>
@@ -98,18 +111,24 @@ export default function RequestDetailsScreen({ route }) {
               </View>
             </View>
           )}
-          {offer && request.status === 'completed' && !offer.status === 'rejected' && (
-            <View style={styles.wrapper}>
-              <Text>Вы завершили эту заявку</Text>
-              <Text>Выплата {offer.price} руб.</Text>
-              <Text>Написать отзыв (нужен функционал)</Text>
-            </View>
-          )}
-          {offer && request.status === 'completed' && offer.status === 'rejected' && (
-            <View style={styles.wrapper}>
-              <Text>Ваша заявка отклонена мастером</Text>
-            </View>
-          )}
+          {offer &&
+            request.status === 'completed' &&
+            offer.status === 'accepted' && (
+              <View style={styles.wrapperFeedback}>
+                <Text>Вы завершили эту заявку</Text>
+                <Feedback
+                  handleSendFeedback={handleSendFeedback}
+                  requestId={id}
+                />
+              </View>
+            )}
+          {offer &&
+            request.status === 'completed' &&
+            offer.status === 'rejected' && (
+              <View style={styles.wrapper}>
+                <Text>Ваша заявка отклонена мастером</Text>
+              </View>
+            )}
         </>
       )}
     </View>

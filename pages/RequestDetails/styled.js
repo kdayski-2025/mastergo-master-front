@@ -35,4 +35,11 @@ export default StyleSheet.create({
     borderRadius: Radius.medium,
     ...Shadows.small,
   },
+
+  wrapperFeedback: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: Gaps.g16,
+  },
 });

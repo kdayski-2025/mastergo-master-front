@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { GET } from '../api/fetch-api';
+import { GET, POST } from '../api/fetch-api';
 
 class UserService {
   initialState = {
@@ -60,6 +60,31 @@ class UserService {
         loading: false,
         error: error.message,
         userProfile: null,
+      });
+      throw new Error(error.message);
+    }
+  }
+  async sendFeedback(data) {
+    if (this.state$.value.loading) {
+      return;
+    }
+
+    this.state$.next({
+      ...this.state$.value,
+      loading: true,
+    });
+
+    try {
+      await POST('/user/rewiews', data);
+      this.state$.next({
+        ...this.state$.value,
+        loading: false,
+      });
+    } catch (error) {
+      this.state$.next({
+        ...this.state$.value,
+        loading: false,
+        error: error.message,
       });
       throw new Error(error.message);
     }
