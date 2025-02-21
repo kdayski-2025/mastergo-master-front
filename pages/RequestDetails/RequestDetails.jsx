@@ -19,11 +19,11 @@ export default function RequestDetailsScreen({ route }) {
   });
 
   const handleChange = (value) => {
-    setFormData({ price: value });
+    setFormData((prev) => ({ ...prev, price: value }));
   };
 
   const handleCommentChange = (value) => {
-    setFormData({ comment: value });
+    setFormData((prev) => ({ ...prev, comment: value }));
   };
 
   useEffect(() => {
