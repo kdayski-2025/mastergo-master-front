@@ -29,18 +29,36 @@ const isTokenExpired = (token) => {
 
 
 const refreshAccessToken = async (refreshToken) => {
-  try {
-    const response = await fetch('/api/refresh-token', {
+  return new Promise(async (resolve, reject) => {
+    let url = Constants?.expoConfig?.api?.url
+    if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
+    url += '/api' + '/auth/refresh';
+
+    const body = JSON.stringify({ refreshToken });
+    const options = {
       method: 'POST',
-      headers,
-      body: JSON.stringify({ refreshToken }),
-    });
-    const data = await response.json();
-    return data.token;
-  } catch (error) {
-    console.error('Ошибка при обновлении токена:', error);
-    return null;
-  }
+      headers: {
+        ...headers,
+      },
+      body,
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (response.status === 418 || response.status === 503) {
+        const error = new Error(response.status);
+        reject(error);
+      }
+      if (!response.ok) {
+        reject(new Error(`${response.statusText || 'POST_DATA_ERROR'}\n${url}\n${JSON.stringify(data)}`));
+      }
+      const json = await response.json();
+      resolve(json);
+    } catch (e) {
+      const error = simplifyErrorMessage(e.message);
+      reject(new Error(error));
+    }
+  });
 }
 
 const checkAndRefreshToken = async () => {
@@ -52,10 +70,11 @@ const checkAndRefreshToken = async () => {
   }
 
   if (isTokenExpired(token)) {
-    const newToken = await refreshAccessToken(refreshToken);
-    if (newToken) {
-      await AsyncStorage.setItem('auth_token', newToken);
-      return newToken;
+    const response = await refreshAccessToken(refreshToken);
+    if (response.data) {
+      await AsyncStorage.setItem('auth_token', response.data.token);
+      await AsyncStorage.setItem('refresh_token', response.data.refreshToken);
+      return response.data.token;
     }
     return null;
   }

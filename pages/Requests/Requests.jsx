@@ -34,7 +34,7 @@ export default function RequestsScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      RequestsServiceInstance.get();
+      RequestsServiceInstance.get({ status: 'open' });
       return () => {};
     }, [])
   );

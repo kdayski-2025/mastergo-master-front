@@ -46,7 +46,7 @@ class LoginService {
         refreshToken: result?.data?.refreshToken
       };
       result?.data?.token ? await AsyncStorage.setItem('auth_token', result?.data?.token) : await AsyncStorage.removeItem('auth_token');
-      result?.data?.refreshToken ? await AsyncStorage.setItem('refresh_token', result?.data?.token) : await AsyncStorage.removeItem('refresh_token');
+      result?.data?.refreshToken ? await AsyncStorage.setItem('refresh_token', result?.data?.refreshToken) : await AsyncStorage.removeItem('refresh_token');
       this.state$.next(this.state);
     } catch (error) {
       this.state = {

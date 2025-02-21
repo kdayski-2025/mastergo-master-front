@@ -15,10 +15,15 @@ export default function RequestDetailsScreen({ route }) {
   const { request, offer } = useRequest();
   const [formData, setFormData] = useState({
     price: '',
+    comment: '',
   });
 
   const handleChange = (value) => {
     setFormData({ price: value });
+  };
+
+  const handleCommentChange = (value) => {
+    setFormData({ comment: value });
   };
 
   useEffect(() => {
@@ -32,7 +37,7 @@ export default function RequestDetailsScreen({ route }) {
   };
 
   const handleAccept = () => {
-    const { price } = formData;
+    const { price, comment } = formData;
     if (!price && request.requestType === 'auction') {
       Alert.alert('Ошибка', 'Укажите цену');
       return;
@@ -40,7 +45,7 @@ export default function RequestDetailsScreen({ route }) {
     // user может быть null при приколах с авторизацией. нужно перелогиниться
     RequestServiceInstance.postOffer(id, {
       price,
-      comment: 'Сделаю быстро и качественно',
+      comment,
       masterId: userProfile.id,
     });
   };
@@ -50,11 +55,7 @@ export default function RequestDetailsScreen({ route }) {
       <View style={styles.header} />
       {request && (
         <>
-          <DescriptionRequest
-            description={request.description}
-            address={request.address}
-            photos={request.photos}
-          />
+          <DescriptionRequest description={request.description} address={request.address} photos={request.photos} />
           {!offer && (
             <View style={styles.wrapper}>
               <View style={styles['price-section']}>
@@ -67,6 +68,13 @@ export default function RequestDetailsScreen({ route }) {
                     onChangeText={handleChange}
                   />
                 )}
+
+                <Input
+                  style={styles.input}
+                  placeholder="Комментарий"
+                  value={formData.comment}
+                  onChangeText={handleCommentChange}
+                />
 
                 <Button text="Принять" onPress={handleAccept} />
               </View>
@@ -90,22 +98,18 @@ export default function RequestDetailsScreen({ route }) {
               </View>
             </View>
           )}
-          {offer &&
-            request.status === 'completed' &&
-            !offer.status === 'rejected' && (
-              <View style={styles.wrapper}>
-                <Text>Вы завершили эту заявку</Text>
-                <Text>Выплата {offer.price} руб.</Text>
-                <Text>Написать отзыв (нужен функционал)</Text>
-              </View>
-            )}
-          {offer &&
-            request.status === 'completed' &&
-            offer.status === 'rejected' && (
-              <View style={styles.wrapper}>
-                <Text>Ваша заявка отклонена мастером</Text>
-              </View>
-            )}
+          {offer && request.status === 'completed' && !offer.status === 'rejected' && (
+            <View style={styles.wrapper}>
+              <Text>Вы завершили эту заявку</Text>
+              <Text>Выплата {offer.price} руб.</Text>
+              <Text>Написать отзыв (нужен функционал)</Text>
+            </View>
+          )}
+          {offer && request.status === 'completed' && offer.status === 'rejected' && (
+            <View style={styles.wrapper}>
+              <Text>Ваша заявка отклонена мастером</Text>
+            </View>
+          )}
         </>
       )}
     </View>
