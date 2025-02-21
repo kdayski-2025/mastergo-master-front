@@ -34,8 +34,15 @@ export default function RequestsScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      RequestsServiceInstance.get({ status: 'open' });
-      return () => {};
+      const fetchData = () => {
+        RequestsServiceInstance.get({ status: 'open' });
+      };
+
+      fetchData();
+      const interval = setInterval(fetchData, 10000);
+      return () => {
+        clearInterval(interval);
+      };
     }, [])
   );
 

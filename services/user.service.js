@@ -64,31 +64,6 @@ class UserService {
       throw new Error(error.message);
     }
   }
-  async sendFeedback(data) {
-    if (this.state$.value.loading) {
-      return;
-    }
-
-    this.state$.next({
-      ...this.state$.value,
-      loading: true,
-    });
-
-    try {
-      await POST('/user/rewiews', data);
-      this.state$.next({
-        ...this.state$.value,
-        loading: false,
-      });
-    } catch (error) {
-      this.state$.next({
-        ...this.state$.value,
-        loading: false,
-        error: error.message,
-      });
-      throw new Error(error.message);
-    }
-  }
 }
 
 const UserServiceInstance = new UserService();

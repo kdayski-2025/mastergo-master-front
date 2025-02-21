@@ -18,7 +18,7 @@ class RequestService {
 		}
 
 		this.state = {
-			...this.initialState,
+			...this.state,
 			loading: true,
 		};
 		this.state$.next(this.state);
@@ -101,6 +101,32 @@ class RequestService {
 				error: error.message,
 			};
 			this.state$.next(this.state);
+			throw new Error(error.message);
+		}
+	}
+
+	async sendFeedback(data) {
+		if (this.state.loading) {
+			return;
+		}
+
+		this.state$.next({
+			...this.state,
+			loading: true,
+		});
+
+		try {
+			await POST('/user/rewiews', data);
+			this.state$.next({
+				...this.state,
+				loading: false,
+			});
+		} catch (error) {
+			this.state$.next({
+				...this.state,
+				loading: false,
+				error: error.message,
+			});
 			throw new Error(error.message);
 		}
 	}

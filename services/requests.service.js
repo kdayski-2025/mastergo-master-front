@@ -17,7 +17,7 @@ class RequestsService {
     }
 
     this.state = {
-      ...this.initialState,
+      ...this.state,
       loading: true,
     };
     this.state$.next(this.state);
