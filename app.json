@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "api": {
-      "url": "https://mars4.fanil.ru",
+      "url": "https://mars3.fanil.ru",
       "assets": "/assets/requests"
     },
     "userType": "master",
@@ -39,7 +39,8 @@
         "ACCESS_COARSE_LOCATION",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
-      ]
+      ],
+      "package": "com.avanor.matergomaster"
     },
     "web": {
       "bundler": "metro",
@@ -60,6 +61,14 @@
     ],
     "experiments": {
       "typedRoutes": false
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0469a455-e8ae-42c5-8156-e48b61e25fbf"
+      }
     }
   }
 }
