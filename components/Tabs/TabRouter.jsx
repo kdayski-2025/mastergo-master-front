@@ -31,21 +31,19 @@ function TabScreens() {
         name="Запросы"
         component={RequestsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <RequestsIcon width={size} height={size} fill={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <RequestsIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
-      <Tab.Screen
-        name="Настройки"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => <SettingsIcon width={size} height={size} fill={color} />,
-        }}
-      />
+
       <Tab.Screen
         name="Профиль"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <ProfileIcon width={size} height={size} fill={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <ProfileIcon width={size} height={size} fill={color} />
+          ),
         }}
       />
     </Tab.Navigator>

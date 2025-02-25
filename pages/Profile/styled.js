@@ -34,4 +34,10 @@ export default StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
   },
+  wrapperImage: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });
