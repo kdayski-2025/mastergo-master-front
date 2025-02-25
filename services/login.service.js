@@ -94,6 +94,24 @@ class LoginService {
     }
   }
 
+  async logout() {
+    try {
+      await AsyncStorage.removeItem('auth_token');
+      await AsyncStorage.removeItem('refresh_token');
+      this.state = {
+        token: null,
+        refreshToken: null
+      };
+      this.state$.next(this.state);
+    } catch (error) {
+      this.state = {
+        token: null,
+        refreshToken: null
+      };
+      this.state$.next(this.state);
+    }
+  }
+
   async edit() {
     if (this.state.loading) {
       return;

@@ -5,8 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RequestsScreen from '../../pages/Requests/Requests';
 import SettingsScreen from '../../pages/Settings/Settings';
 import ProfileScreen from '../../pages/Profile/Profile';
-import ReviewsScreen from '../../pages/Reviews/Reviews';
-import RequestDetailsScreen from '../../pages/RequestDetails/RequestDetails';
 
 import { Colors } from '../../shared/tokens';
 import { tabRouterStyles } from './styled';
@@ -65,8 +63,6 @@ export default function TabNavigator() {
       }}
     >
       <Stack.Screen name="TabScreens" component={TabScreens} />
-      <Stack.Screen name="RequestDetails" component={RequestDetailsScreen} />
-      <Stack.Screen name="Reviews" component={ReviewsScreen} />
     </Stack.Navigator>
   );
 }
