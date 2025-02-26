@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from '../../shared/tokens';
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.green,
     padding: 18,
     borderRadius: 10,
+  },
+  container: {
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,

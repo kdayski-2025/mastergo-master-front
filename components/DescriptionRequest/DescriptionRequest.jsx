@@ -1,9 +1,10 @@
-import React from 'react';
-import { View, Text, ScrollView, Pressable, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, Pressable, Image, Modal } from 'react-native';
 import { getAssetUrl } from '../../lib/lib';
 import styles from './styled';
 import { Icon } from 'react-native-elements';
 import { Colors } from '../../shared/tokens';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function DescriptionRequest({
   title = 'Описание заказа',
@@ -11,6 +12,9 @@ export default function DescriptionRequest({
   address,
   photos,
 }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -34,7 +38,10 @@ export default function DescriptionRequest({
               <Pressable
                 key={index}
                 style={styles.photoWrapper}
-                onPress={() => console.log('Open photo')}
+                onPress={() => {
+                  setSelectedPhoto(photo);
+                  setModalVisible(true);
+                }}
               >
                 <Image
                   source={{ uri: `${getAssetUrl()}/${photo}` }}
@@ -46,6 +53,31 @@ export default function DescriptionRequest({
           </ScrollView>
         </View>
       )}
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <Pressable
+          style={styles.modalContainer}
+          onPress={() => setModalVisible(false)}
+        >
+          <Pressable
+            onPress={() => setModalVisible(false)}
+            style={styles.closeButton}
+          >
+            <Ionicons name="close" size={24} color="white" />
+          </Pressable>
+          {selectedPhoto && (
+            <Image
+              source={{ uri: `${getAssetUrl()}/${selectedPhoto}` }}
+              style={styles.fullImage}
+              resizeMode="contain"
+            />
+          )}
+        </Pressable>
+      </Modal>
     </View>
   );
 }

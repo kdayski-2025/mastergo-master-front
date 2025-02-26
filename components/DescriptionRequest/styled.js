@@ -55,4 +55,25 @@ export default StyleSheet.create({
     height: 100,
     backgroundColor: Colors.gray100,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    padding: 10,
+  },
+  closeText: {
+    color: Colors.black,
+    fontSize: 16,
+  },
+  fullImage: {
+    width: '90%',
+    height: '80%',
+    borderRadius: 10,
+  },
 });
