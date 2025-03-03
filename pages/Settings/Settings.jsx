@@ -15,7 +15,7 @@ import useCategory from '../../hooks/useCategory';
 export default function SettingsScreen() {
   const { cities } = useCities();
   const { categories } = useCategory();
-  const { user } = useUser();
+  const { userProfile } = useUser();
   const [formData, setFormData] = useState({
     cityId: '',
     masterTypeId: '',
@@ -47,10 +47,10 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     setFormData({
-      cityId: user?.cityId,
-      masterTypeId: user?.masterTypeId,
+      cityId: userProfile?.cityId,
+      masterTypeId: userProfile?.masterTypeId,
     });
-  }, [user]);
+  }, [userProfile]);
 
   return (
     <View style={styles.container}>
@@ -70,7 +70,11 @@ export default function SettingsScreen() {
           dropdownIconColor={Colors.gray}
           mode="dialog"
         >
-          <Picker.Item label="Город" value={null} style={styles.placeholderText} />
+          <Picker.Item
+            label="Город"
+            value={null}
+            style={styles.placeholderText}
+          />
           {cities.map((type) => (
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}
@@ -88,7 +92,11 @@ export default function SettingsScreen() {
           dropdownIconColor={Colors.gray}
           mode="dialog"
         >
-          <Picker.Item label="Тип работы" value={null} style={styles.placeholderText} />
+          <Picker.Item
+            label="Тип работы"
+            value={null}
+            style={styles.placeholderText}
+          />
           {categories.map((type) => (
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}

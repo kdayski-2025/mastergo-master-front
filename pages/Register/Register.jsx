@@ -17,7 +17,7 @@ import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
 
 export default function RegisterScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
-  const { user } = useUser();
+  const { userProfile } = useUser();
   const { loginInfo, token } = useLogin();
   const { cities } = useCities();
   const { categories } = useCategory();
@@ -38,7 +38,7 @@ export default function RegisterScreen({ navigation }) {
   }, [token]);
 
   useEffect(() => {
-    UserServiceInstance.get(loginInfo);
+    UserServiceInstance.getProfile();
   }, [submitted, loginInfo]);
 
   useEffect(() => {
@@ -53,8 +53,8 @@ export default function RegisterScreen({ navigation }) {
   }, [loginInfo]);
 
   useEffect(() => {
-    if (user) navigation.navigate('Main');
-  }, [user]);
+    if (userProfile) navigation.navigate('Main');
+  }, [userProfile]);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -75,9 +75,25 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const handleSubmit = async () => {
-    const { fullName, birthDate, citizenship, email, cityId, masterTypeId, phone } = formData;
+    const {
+      fullName,
+      birthDate,
+      citizenship,
+      email,
+      cityId,
+      masterTypeId,
+      phone,
+    } = formData;
 
-    if (!fullName || !birthDate || !citizenship || !email || !cityId || !masterTypeId || !phone) {
+    if (
+      !fullName ||
+      !birthDate ||
+      !citizenship ||
+      !email ||
+      !cityId ||
+      !masterTypeId ||
+      !phone
+    ) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
@@ -113,7 +129,9 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Стать клиентом Mastergo</Text>
-      <Text style={styles.subtitle}>Укажите ваши данные, чтобы использовать все функции приложения</Text>
+      <Text style={styles.subtitle}>
+        Укажите ваши данные, чтобы использовать все функции приложения
+      </Text>
 
       <PhoneNumberInput
         placeholder="+7 (XXX) XXX-XX-XX"
@@ -158,7 +176,11 @@ export default function RegisterScreen({ navigation }) {
           dropdownIconColor={Colors.gray}
           mode="dialog"
         >
-          <Picker.Item label="Город" value={null} style={styles.placeholderText} />
+          <Picker.Item
+            label="Город"
+            value={null}
+            style={styles.placeholderText}
+          />
           {cities.map((type) => (
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}
@@ -176,7 +198,11 @@ export default function RegisterScreen({ navigation }) {
           dropdownIconColor={Colors.gray}
           mode="dialog"
         >
-          <Picker.Item label="Город" value={null} style={styles.placeholderText} />
+          <Picker.Item
+            label="Ваши услуги"
+            value={null}
+            style={styles.placeholderText}
+          />
           {categories.map((type) => (
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}

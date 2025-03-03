@@ -9,16 +9,18 @@ import Input from '../../components/Input/Input';
 import Chat from '../../components/Chat/Chat';
 import DescriptionRequest from '../../components/DescriptionRequest/DescriptionRequest';
 import Feedback from '../../components/Feedback/Feedback';
+import UserServiceInstance from '../../services/user.service';
 
 export default function RequestDetailsScreen({ route }) {
   const { id } = route.params;
   const { userProfile } = useUser();
   const { request, offer } = useRequest();
+  const [loadingReview, setLoadingReview] = useState(true);
+  const [isReviewed, setIsReviewed] = useState(false);
   const [formData, setFormData] = useState({
     price: '',
     comment: '',
   });
-
   const handleChange = (value) => {
     setFormData((prev) => ({ ...prev, price: value }));
   };
@@ -26,6 +28,18 @@ export default function RequestDetailsScreen({ route }) {
   const handleCommentChange = (value) => {
     setFormData((prev) => ({ ...prev, comment: value }));
   };
+
+  useEffect(() => {
+    const fetchData = () => {
+      if (request) {
+        if (request?.user?.id) UserServiceInstance.getProfile(request.user.id);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  }, [request]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -39,8 +53,9 @@ export default function RequestDetailsScreen({ route }) {
     return () => clearInterval(interval);
   }, [id]);
 
-  const handleComplete = () => {
-    RequestServiceInstance.complete(id);
+  const handleComplete = async () => {
+    await RequestServiceInstance.complete(id);
+    await RequestServiceInstance.get(request.id);
   };
 
   const handleAccept = () => {
@@ -56,15 +71,30 @@ export default function RequestDetailsScreen({ route }) {
     });
   };
 
-  const handleSendFeedback = (data) => {
-    RequestServiceInstance.sendFeedback(data);
+  const handleSendFeedback = async (data) => {
+    await RequestServiceInstance.sendFeedback(data);
+    await RequestServiceInstance.get(request.id);
+    await UserServiceInstance.getProfile(request.master.id);
   };
+
+  useEffect(() => {
+    if (userProfile) {
+      const reviews = userProfile.rewiews;
+      const review = reviews.find((item) => item.requestId === id);
+      if (review) setIsReviewed(true);
+      setLoadingReview(false);
+    }
+  }, [id, userProfile]);
 
   return (
     <View style={styles.container}>
       <View style={styles.header} />
       {request && (
-        <DescriptionRequest description={request.description} address={request.address} photos={request.photos} />
+        <DescriptionRequest
+          description={request.description}
+          address={request.address}
+          photos={request.photos}
+        />
       )}
       {request && (
         <>
@@ -110,19 +140,28 @@ export default function RequestDetailsScreen({ route }) {
               </View>
             </View>
           )}
-          {offer && request.status === 'completed' && offer.status === 'accepted' && (
+          {!loadingReview && !isReviewed && request.status === 'completed' && (
             <View style={styles.wrapperFeedback}>
               <Text>Вы завершили эту заявку</Text>
-              {request.requestType === 'auction' && <Text>Выплата {offer.price} руб.</Text>}
-              {request.requestType === 'fixed' && <Text>Выплата {request.price} руб.</Text>}
-              <Feedback handleSendFeedback={handleSendFeedback} requestId={id} />
+              {request.requestType === 'auction' && (
+                <Text>Выплата {offer.price} руб.</Text>
+              )}
+              {request.requestType === 'fixed' && (
+                <Text>Выплата {request.price} руб.</Text>
+              )}
+              <Feedback
+                handleSendFeedback={handleSendFeedback}
+                requestId={id}
+              />
             </View>
           )}
-          {offer && request.status === 'completed' && offer.status === 'rejected' && (
-            <View style={styles.wrapper}>
-              <Text>Ваша заявка отклонена мастером</Text>
-            </View>
-          )}
+          {offer &&
+            request.status === 'completed' &&
+            offer.status === 'rejected' && (
+              <View style={styles.wrapper}>
+                <Text>Ваша заявка отклонена мастером</Text>
+              </View>
+            )}
         </>
       )}
     </View>

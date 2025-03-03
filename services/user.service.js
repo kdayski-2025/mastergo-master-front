@@ -5,51 +5,23 @@ class UserService {
   initialState = {
     loading: false,
     error: null,
-    user: null,
     userProfile: null,
   };
 
   state$ = new BehaviorSubject(this.initialState);
 
-  async get(body) {
+  async getProfile(id) {
     if (this.state$.value.loading) {
       return;
     }
 
     this.state$.next({
-      ...this.initialState,
+      ...this.state$.value,
       loading: true,
     });
 
     try {
-      const result = await GET('/user', body);
-      this.state$.next({
-        loading: false,
-        error: result.error,
-        user: result.data,
-      });
-    } catch (error) {
-      this.state$.next({
-        loading: false,
-        error: error.message,
-        user: null,
-      });
-      throw new Error(error.message);
-    }
-  }
-
-  async getProfile() {
-    if (this.state$.value.loading) {
-      return;
-    }
-
-    this.state$.next({
-      ...this.initialState,
-      loading: true,
-    });
-
-    try {
-      const result = await GET(`/user/profile`);
+      const result = await GET(`/user/profile${id ? `/${id}` : ''}`);
       this.state$.next({
         loading: false,
         error: result.error,
