@@ -10,10 +10,13 @@ import Chat from '../../components/Chat/Chat';
 import DescriptionRequest from '../../components/DescriptionRequest/DescriptionRequest';
 import Feedback from '../../components/Feedback/Feedback';
 import UserServiceInstance from '../../services/user.service';
+import OtherUserInstance from '../../services/otherUser.service';
+import userOtherUser from '../../hooks/userOtherUser';
 
 export default function RequestDetailsScreen({ route }) {
   const { id } = route.params;
   const { userProfile } = useUser();
+  const { otherUserProfile } = userOtherUser();
   const { request, offer } = useRequest();
   const [loadingReview, setLoadingReview] = useState(true);
   const [isReviewed, setIsReviewed] = useState(false);
@@ -32,13 +35,19 @@ export default function RequestDetailsScreen({ route }) {
   useEffect(() => {
     const fetchData = () => {
       if (request) {
-        if (request?.user?.id) UserServiceInstance.getProfile(request.user.id);
+        if (request?.user?.id) UserServiceInstance.getProfile();
       }
     };
 
     fetchData();
     const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
+  }, [request]);
+
+  useEffect(() => {
+    if (request) {
+      OtherUserInstance.getOtherUserProfile(request.userId);
+    }
   }, [request]);
 
   useEffect(() => {
@@ -55,7 +64,7 @@ export default function RequestDetailsScreen({ route }) {
 
   const handleComplete = async () => {
     await RequestServiceInstance.complete(id);
-    await RequestServiceInstance.get(request.id);
+    await RequestServiceInstance.get(id);
   };
 
   const handleAccept = () => {
@@ -73,14 +82,15 @@ export default function RequestDetailsScreen({ route }) {
 
   const handleSendFeedback = async (data) => {
     await RequestServiceInstance.sendFeedback(data);
-    await RequestServiceInstance.get(request.id);
-    await UserServiceInstance.getProfile(request.master.id);
+    await RequestServiceInstance.get(id);
+    await UserServiceInstance.getProfile();
   };
-
   useEffect(() => {
     if (userProfile) {
-      const reviews = userProfile.rewiews;
-      const review = reviews.find((item) => item.requestId === id);
+      const reviews = otherUserProfile.rewiews;
+      const review = reviews.find((item) => {
+        return item.requestId === id;
+      });
       if (review) setIsReviewed(true);
       setLoadingReview(false);
     }

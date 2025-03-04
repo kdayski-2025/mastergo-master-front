@@ -6,6 +6,7 @@ class UserService {
     loading: false,
     error: null,
     userProfile: null,
+    otherUserProfile: null,
   };
 
   state$ = new BehaviorSubject(this.initialState);
@@ -36,6 +37,33 @@ class UserService {
       throw new Error(error.message);
     }
   }
+
+  // async getOtherUserProfile(id) {
+  //   if (this.state$.value.loading) {
+  //     return;
+  //   }
+
+  //   this.state$.next({
+  //     ...this.state$.value,
+  //     loading: true,
+  //   });
+
+  //   try {
+  //     const result = await GET(`/user/profile${id ? `/${id}` : ''}`);
+  //     this.state$.next({
+  //       loading: false,
+  //       error: result.error,
+  //       otherUserProfile: result.data,
+  //     });
+  //   } catch (error) {
+  //     this.state$.next({
+  //       loading: false,
+  //       error: error.message,
+  //       otherUserProfile: null,
+  //     });
+  //     throw new Error(error.message);
+  //   }
+  // }
 }
 
 const UserServiceInstance = new UserService();

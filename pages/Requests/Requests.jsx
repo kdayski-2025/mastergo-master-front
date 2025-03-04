@@ -55,12 +55,20 @@ export default function RequestsScreen() {
           <EmptyContent title={'Нет активных заказов'} />
         ) : (
           requests.map((request, index) => (
-            <Card key={index} onPress={() => handlePress(request)} state={active === request.id ? 'target' : 'default'}>
+            <Card
+              key={index}
+              onPress={() => handlePress(request)}
+              state={active === request.id ? 'target' : 'default'}
+            >
               <Text type={'title'}>{request.masterType.name}</Text>
               <Text type={'description'}>{request.description}</Text>
               <Text type={'description'}>{request.address}</Text>
               <Text type={'description'}>{request.requestType}</Text>
-              {request.price ? <Text type={'price'}>{request.price}р</Text> : <></>}
+              {request.price ? (
+                <Text type={'price'}>{request.price}р</Text>
+              ) : (
+                <></>
+              )}
             </Card>
           ))
         )}

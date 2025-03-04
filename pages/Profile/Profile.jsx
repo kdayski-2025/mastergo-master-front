@@ -33,8 +33,8 @@ export default function Profile() {
       UserServiceInstance.getProfile();
     };
     fetchData();
-    const interval = setInterval(fetchData, 10000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchData, 10000);
+    // return () => clearInterval(interval);
   }, []);
 
   useFocusEffect(

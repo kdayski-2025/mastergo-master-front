@@ -8,6 +8,7 @@ import RegisterScreen from './pages/Register/Register';
 import TabNavigator from './components/Tabs/TabRouter';
 import RequestDetailsScreen from './pages/RequestDetails/RequestDetails';
 import ReviewsScreen from './pages/Reviews/Reviews';
+import OtherUserProfile from './pages/OtherUserProfile/OtherUserProfile';
 import SettingsScreen from './pages/Settings/Settings';
 
 const Stack = createStackNavigator();
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Main" component={TabNavigator} />
         <Stack.Screen name="RequestDetails" component={RequestDetailsScreen} />
         <Stack.Screen name="Reviews" component={ReviewsScreen} />
+        <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>

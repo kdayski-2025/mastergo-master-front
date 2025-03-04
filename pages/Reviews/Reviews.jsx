@@ -12,6 +12,10 @@ export default function Reviews({ route }) {
   const [reviews, setReviews] = useState(data.rewiews);
   const navigation = useNavigation();
 
+  const handlePressUserProfile = (id) => {
+    navigation.navigate('OtherUserProfile', { id });
+  };
+
   const renderStars = (rating) => {
     const stars = [];
     const maxStars = 5;
@@ -81,18 +85,8 @@ export default function Reviews({ route }) {
       );
     });
   };
-
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.addReviewButton}
-          onPress={() => navigation.navigate('AddReview')}
-        >
-          <Text style={styles.addReviewText}>Запросить отзыв</Text>
-        </TouchableOpacity>
-      </View> */}
-
       <View style={styles.ratingSection}>
         <Text style={styles.ratingNumber}>5.0</Text>
         <Text style={styles.ratingSubtext}>
@@ -110,7 +104,10 @@ export default function Reviews({ route }) {
                 style={styles.reviewerAvatar}
               />
               <View style={styles.reviewerInfo}>
-                <Text style={styles.reviewerName}>
+                <Text
+                  style={styles.reviewerName}
+                  onPress={() => handlePressUserProfile(review.writerUser.id)}
+                >
                   {review.writerUser.name}
                 </Text>
                 <Text style={styles.reviewDate}>
