@@ -17,9 +17,10 @@ import UserServiceInstance from '../../services/user.service';
 import { FontAwesome } from '@expo/vector-icons';
 import PickerMenu from '../../components/Picker/PickerMenu';
 import LoginServiceInstance from '../../services/login.service';
+import Loader from '../../components/Loader/Loader';
 
 export default function Profile() {
-  const { userProfile } = useUser();
+  const { userProfile, loading: loadingUser } = useUser();
   const [activeTab, setActiveTab] = useState('in_progress');
   const navigation = useNavigation();
   const { requests, loading } = useRequests();
@@ -167,56 +168,68 @@ export default function Profile() {
         <Text style={styles.title}>Заказы</Text>
         <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
           <Tab value={'open'} activeTab={activeTab}>
-            {!loading && requests && requests.length > 0 ? (
-              requests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() => handlePress('RequestDetails', request.id)}
-                >
-                  <Text type={'title'}>{request.masterType.name}</Text>
-                  <Text type={'description'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))
+            {!loading ? (
+              requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('RequestDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )
             ) : (
-              <Text type={'title'}>Заказов нет!</Text>
+              <Loader />
             )}
           </Tab>
 
           <Tab value={'in_progress'} activeTab={activeTab}>
-            {requests && requests.length > 0 ? (
-              requests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() => handlePress('RequestDetails', request.id)}
-                >
-                  <Text type={'title'}>{request.masterType.name}</Text>
-                  <Text type={'description'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))
+            {!loading ? (
+              requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('RequestDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )
             ) : (
-              <Text type={'title'}>Заказов нет!</Text>
+              <Loader />
             )}
           </Tab>
 
           <Tab value={'completed'} activeTab={activeTab}>
-            {!loading && requests && requests.length > 0 ? (
-              requests.map((request, index) => (
-                <Card
-                  key={index}
-                  onPress={() => handlePress('RequestDetails', request.id)}
-                >
-                  <Text type={'title'}>{request.masterType.name}</Text>
-                  <Text type={'description'}>{request.description}</Text>
-                  <Text type={'description'}>{request.address}</Text>
-                  <Text type={'price'}>2000р</Text>
-                </Card>
-              ))
+            {!loading ? (
+              requests && requests.length > 0 ? (
+                requests.map((request, index) => (
+                  <Card
+                    key={index}
+                    onPress={() => handlePress('RequestDetails', request.id)}
+                  >
+                    <Text type={'title'}>{request.masterType.name}</Text>
+                    <Text type={'description'}>{request.description}</Text>
+                    <Text type={'description'}>{request.address}</Text>
+                    <Text type={'price'}>2000р</Text>
+                  </Card>
+                ))
+              ) : (
+                <Text type={'title'}>Заказов нет!</Text>
+              )
             ) : (
-              <Text type={'title'}>Заказов нет!</Text>
+              <Loader />
             )}
           </Tab>
         </Tabs>

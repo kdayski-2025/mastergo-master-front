@@ -24,6 +24,8 @@ export default function RequestDetailsScreen({ route }) {
     price: '',
     comment: '',
   });
+  const [btnLoader, setBtnLoader] = useState(false);
+  const [btnSendLoader, setBtnSendLoader] = useState(false);
   const handleChange = (value) => {
     setFormData((prev) => ({ ...prev, price: value }));
   };
@@ -63,8 +65,10 @@ export default function RequestDetailsScreen({ route }) {
   }, [id]);
 
   const handleComplete = async () => {
+    setBtnLoader(true);
     await RequestServiceInstance.complete(id);
     await RequestServiceInstance.get(id);
+    setBtnLoader(false);
   };
 
   const handleAccept = () => {
@@ -81,21 +85,24 @@ export default function RequestDetailsScreen({ route }) {
   };
 
   const handleSendFeedback = async (data) => {
+    setBtnSendLoader(true);
     await RequestServiceInstance.sendFeedback(data);
     await RequestServiceInstance.get(id);
     await UserServiceInstance.getProfile();
   };
   useEffect(() => {
     if (userProfile) {
-      const reviews = otherUserProfile.rewiews;
+      const reviews = otherUserProfile ? otherUserProfile.rewiews : [];
       const review = reviews.find((item) => {
         return item.requestId === id;
       });
-      if (review) setIsReviewed(true);
+      if (review) {
+        setIsReviewed(true);
+        setBtnSendLoader(false);
+      }
       setLoadingReview(false);
     }
   }, [id, userProfile]);
-
   return (
     <View style={styles.container}>
       <View style={styles.header} />
@@ -144,7 +151,12 @@ export default function RequestDetailsScreen({ route }) {
           )}
           {offer && request.status === 'in_progress' && (
             <View style={styles.wrapper}>
-              <Button text={'Завершить работу'} onPress={handleComplete} />
+              <Button
+                isLoading={btnLoader}
+                text={'Завершить работу'}
+                onPress={handleComplete}
+              />
+
               <View style={styles.chatWrapper}>
                 <Chat requestId={id} />
               </View>
@@ -162,6 +174,7 @@ export default function RequestDetailsScreen({ route }) {
               <Feedback
                 handleSendFeedback={handleSendFeedback}
                 requestId={id}
+                isLoading={btnSendLoader}
               />
             </View>
           )}

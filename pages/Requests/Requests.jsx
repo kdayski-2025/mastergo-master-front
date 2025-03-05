@@ -8,10 +8,11 @@ import Card from '../../components/Card/Card';
 import useRequests from '../../hooks/useRequests';
 import EmptyContent from '../../components/EmptyContent/EmptyContent';
 import Map from '../../components/Map/Map';
+import Loader from '../../components/Loader/Loader';
 
 export default function RequestsScreen() {
   const navigation = useNavigation();
-  const { requests } = useRequests();
+  const { requests, loading } = useRequests();
   const [target, setTarget] = useState(null);
   const [active, setActive] = useState(null);
   const [mapLoading, setMapLoading] = useState(true);
@@ -45,15 +46,14 @@ export default function RequestsScreen() {
       };
     }, [])
   );
-
   return (
     <View style={styles.container}>
       <View style={styles.header} />
       <Map target={target} setMapLoading={setMapLoading} />
       <ScrollView contentContainerStyle={styles.content}>
-        {!requests ? (
+        {!requests.length > 0 ? (
           <EmptyContent title={'Нет активных заказов'} />
-        ) : (
+        ) : !loading ? (
           requests.map((request, index) => (
             <Card
               key={index}
@@ -71,6 +71,8 @@ export default function RequestsScreen() {
               )}
             </Card>
           ))
+        ) : (
+          <Loader />
         )}
       </ScrollView>
     </View>

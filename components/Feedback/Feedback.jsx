@@ -6,7 +6,7 @@ import styles from './styled';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 
-export default function Feedback({ handleSendFeedback, requestId }) {
+export default function Feedback({ handleSendFeedback, requestId, isLoading }) {
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState('');
 
@@ -26,30 +26,37 @@ export default function Feedback({ handleSendFeedback, requestId }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.starsContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Pressable key={star} onPress={() => handleRating(star)}>
-            <FontAwesome
-              name="star"
-              size={30}
-              color={star <= rating ? '#FFD700' : '#D3D3D3'}
-              style={{ marginRight: 10 }}
-            />
-          </Pressable>
-        ))}
-      </View>
+      {isLoading ? (
+        <></>
+      ) : (
+        <>
+          <View style={styles.starsContainer}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Pressable key={star} onPress={() => handleRating(star)}>
+                <FontAwesome
+                  name="star"
+                  size={30}
+                  color={star <= rating ? '#FFD700' : '#D3D3D3'}
+                  style={{ marginRight: 10 }}
+                />
+              </Pressable>
+            ))}
+          </View>
 
-      <Input
-        placeholder="Введите сообщение..."
-        value={message}
-        onChangeText={(text) => {
-          if (text.length <= 200) {
-            setMessage(text);
-          }
-        }}
-        multiline
-      />
-      <Button text="Отправить" onPress={handleSubmit} />
+          <Input
+            placeholder="Введите сообщение..."
+            value={message}
+            onChangeText={(text) => {
+              if (text.length <= 200) {
+                setMessage(text);
+              }
+            }}
+            multiline
+          />
+        </>
+      )}
+
+      <Button isLoading={isLoading} text="Отправить" onPress={handleSubmit} />
     </View>
   );
 }

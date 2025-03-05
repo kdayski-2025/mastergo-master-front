@@ -6,7 +6,7 @@ import styles from './styled';
 export default function EmptyContent({ title, ...props }) {
   return (
     <View style={styles.empty} {...props}>
-      <Text style={styles.message}>{title}Нет активных заказов</Text>
+      <Text style={styles.message}>{title}</Text>
     </View>
   );
 }

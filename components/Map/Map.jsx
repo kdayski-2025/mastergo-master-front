@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import styles from './styled';
 import { Colors } from '../../shared/tokens';
+import Loader from '../Loader/Loader';
 
 export default function Map({ target, setMapLoading, ...props }) {
   const [location, setLocation] = useState(null);
@@ -44,11 +45,7 @@ export default function Map({ target, setMapLoading, ...props }) {
   }, [location]);
 
   if (loading) {
-    return (
-      <View style={[styles.map, styles.loading]}>
-        <ActivityIndicator size="large" color={Colors.green} />
-      </View>
-    );
+    return <Loader height={400} width={'100%'} mb={16} />;
   }
 
   return (
