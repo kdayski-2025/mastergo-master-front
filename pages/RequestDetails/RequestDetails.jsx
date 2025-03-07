@@ -49,6 +49,9 @@ export default function RequestDetailsScreen({ route }) {
   useEffect(() => {
     if (request) {
       OtherUserInstance.getOtherUserProfile(request.userId);
+      if (request.requestType === 'fixed') {
+        setFormData((prev) => ({ ...prev, price: request.price }));
+      }
     }
   }, [request]);
 
@@ -73,9 +76,7 @@ export default function RequestDetailsScreen({ route }) {
 
   const handleAccept = () => {
     const { price, comment } = formData;
-    if (request.requestType === 'fixed') {
-      setFormData((prev) => ({ ...prev, price: request.price }));
-    }
+
     if (!price && request.requestType === 'auction') {
       Alert.alert('Ошибка', 'Укажите цену');
       return;
