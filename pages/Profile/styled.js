@@ -40,4 +40,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  TabsContaiener: {
+    marginBottom: 50,
+  },
 });

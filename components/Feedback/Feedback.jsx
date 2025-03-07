@@ -56,7 +56,13 @@ export default function Feedback({ handleSendFeedback, requestId, isLoading }) {
         </>
       )}
 
-      <Button isLoading={isLoading} text="Отправить" onPress={handleSubmit} />
+      <Button
+        mt={11}
+        mb={11}
+        isLoading={isLoading}
+        text="Отправить"
+        onPress={handleSubmit}
+      />
     </View>
   );
 }

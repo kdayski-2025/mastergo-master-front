@@ -11,6 +11,7 @@ import LoginServiceInstance from '../../services/login.service';
 import useUser from '../../hooks/useUser';
 import CategoryServiceInstance from '../../services/category.service';
 import useCategory from '../../hooks/useCategory';
+import UserServiceInstance from '../../services/user.service';
 
 export default function SettingsScreen() {
   const { cities } = useCities();
@@ -41,8 +42,11 @@ export default function SettingsScreen() {
       cityId,
       masterTypeId,
     });
+
     await LoginServiceInstance.edit();
-    Alert.alert('Насяльникамана на стройка поменял');
+    await UserServiceInstance.getProfile();
+
+    Alert.alert('Настройки сохранены');
   };
 
   useEffect(() => {

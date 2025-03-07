@@ -164,7 +164,7 @@ export default function Profile() {
         </View>
       )}
 
-      <View>
+      <View style={styles.TabsContaiener}>
         <Text style={styles.title}>Заказы</Text>
         <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
           <Tab value={'open'} activeTab={activeTab}>

@@ -155,6 +155,8 @@ export default function RequestDetailsScreen({ route }) {
                 isLoading={btnLoader}
                 text={'Завершить работу'}
                 onPress={handleComplete}
+                mt={11}
+                mb={11}
               />
 
               <View style={styles.chatWrapper}>
