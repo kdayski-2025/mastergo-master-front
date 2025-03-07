@@ -73,17 +73,13 @@ export default function RequestDetailsScreen({ route }) {
 
   const handleAccept = () => {
     const { price, comment } = formData;
-    console.log(price);
-    console.log(comment);
-    if (!price && request.requestType === 'fixed') {
+    if (request.requestType === 'fixed') {
       setFormData((prev) => ({ ...prev, price: request.price }));
     }
     if (!price && request.requestType === 'auction') {
       Alert.alert('Ошибка', 'Укажите цену');
       return;
     }
-    console.log(price);
-    console.log(comment);
     RequestServiceInstance.postOffer(id, {
       price,
       comment,

@@ -41,5 +41,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: Gaps.g16,
+    marginTop: 40,
   },
 });
