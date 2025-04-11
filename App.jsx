@@ -10,6 +10,7 @@ import RequestDetailsScreen from './pages/RequestDetails/RequestDetails';
 import ReviewsScreen from './pages/Reviews/Reviews';
 import OtherUserProfile from './pages/OtherUserProfile/OtherUserProfile';
 import SettingsScreen from './pages/Settings/Settings';
+import ReferalListScreen from './pages/ReferalList/ReferalList';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="Reviews" component={ReviewsScreen} />
         <Stack.Screen name="OtherUserProfile" component={OtherUserProfile} />
         <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="ReferralList" component={ReferalListScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

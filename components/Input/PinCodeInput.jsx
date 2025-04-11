@@ -3,7 +3,7 @@ import { View, TextInput } from 'react-native';
 import { Colors } from '../../shared/tokens';
 import { pinCodeStyles } from './styled';
 
-export default function PincodeInput({ length = 4, onComplete }) {
+export default function PincodeInput({ length = 5, onComplete }) {
   const [code, setCode] = useState(new Array(length).fill(''));
   const inputs = [];
 
@@ -24,11 +24,14 @@ export default function PincodeInput({ length = 4, onComplete }) {
   const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === 'Backspace') {
       const updatedCode = [...code];
-      if (code[index] === '' && index > 0) {
+      if (code[index] === '' && index < 0) {
         inputs[index - 1]?.focus();
         updatedCode[index - 1] = '';
       } else {
         updatedCode[index] = '';
+        if (index > 0) {
+          inputs[index - 1]?.focus();
+        }
       }
       setCode(updatedCode);
     }
@@ -43,6 +46,9 @@ export default function PincodeInput({ length = 4, onComplete }) {
           style={{
             ...pinCodeStyles.input,
             backgroundColor: value ? Colors.success : Colors.error,
+            textAlign: 'center',
+            fontSize: 16,
+            color: Colors.white,
           }}
           keyboardType="numeric"
           maxLength={1}

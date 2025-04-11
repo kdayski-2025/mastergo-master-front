@@ -24,7 +24,12 @@ function TabScreens() {
         tabBarActiveTintColor: Colors.green,
         tabBarInactiveTintColor: Colors.gray,
         tabBarLabelStyle: tabRouterStyles['tab-label'],
-        tabBarItemStyle: tabRouterStyles['tab-item'],
+        tabBarItemStyle: {
+          ...tabRouterStyles['tab-item'],
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 5,
+        },
       }}
     >
       <Tab.Screen

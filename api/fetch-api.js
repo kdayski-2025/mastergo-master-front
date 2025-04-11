@@ -6,8 +6,8 @@ import { jwtDecode } from 'jwt-decode';
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  'X-app-type': Constants?.expoConfig?.userType || 'client'
-}
+  'X-app-type': Constants?.expoConfig?.userType || 'client',
+};
 
 const convertToQueryParams = (params = {}) => {
   let queryString = '';
@@ -25,13 +25,13 @@ const isTokenExpired = (token) => {
   }
   const currentTime = Math.floor(Date.now() / 1000); // Текущее время в секундах
   return decodedToken.exp < currentTime; // Проверяем, истёк ли токен
-}
-
+};
 
 const refreshAccessToken = async (refreshToken) => {
   return new Promise(async (resolve, reject) => {
-    let url = Constants?.expoConfig?.api?.url
-    if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
+    let url = Constants?.expoConfig?.api?.url;
+    if (Constants?.expoConfig?.api?.port)
+      url += `:${Constants?.expoConfig?.api?.port}`;
     url += '/api' + '/auth/refresh';
 
     const body = JSON.stringify({ refreshToken });
@@ -50,7 +50,13 @@ const refreshAccessToken = async (refreshToken) => {
         reject(error);
       }
       if (!response.ok) {
-        reject(new Error(`${response.statusText || 'POST_DATA_ERROR'}\n${url}\n${JSON.stringify(data)}`));
+        reject(
+          new Error(
+            `${
+              response.statusText || 'POST_DATA_ERROR'
+            }\n${url}\n${JSON.stringify(data)}`
+          )
+        );
       }
       const json = await response.json();
       resolve(json);
@@ -59,7 +65,7 @@ const refreshAccessToken = async (refreshToken) => {
       reject(new Error(error));
     }
   });
-}
+};
 
 const checkAndRefreshToken = async () => {
   const token = await AsyncStorage.getItem('auth_token');
@@ -84,24 +90,27 @@ const checkAndRefreshToken = async () => {
 export const GET = (endpoint = '', params = {}) => {
   return new Promise(async (resolve, reject) => {
     const token = await checkAndRefreshToken();
-    let url = Constants?.expoConfig?.api?.url
-    if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
+    let url = Constants?.expoConfig?.api?.url;
+    if (Constants?.expoConfig?.api?.port)
+      url += `:${Constants?.expoConfig?.api?.port}`;
     url += '/api' + endpoint + convertToQueryParams(params);
     const options = {
       method: 'GET',
       headers: {
         ...headers,
-        'Authorization': token ? `Bearer ${token}` : ''
+        Authorization: token ? `Bearer ${token}` : '',
       },
     };
     fetch(url, options)
       .then(async (response) => {
         if (response.status === 418 || response.status === 503) {
-          const error = new Error(response.status)
+          const error = new Error(response.status);
           reject(error);
         }
         if (!response.ok) {
-          reject(new Error(`${response.statusText || 'FETCH_DATA_ERROR'}\n${url}`));
+          reject(
+            new Error(`${response.statusText || 'FETCH_DATA_ERROR'}\n${url}`)
+          );
         }
 
         const json = await response.json();
@@ -117,8 +126,9 @@ export const GET = (endpoint = '', params = {}) => {
 export const POST = (endpoint = '', data = {}, customHeaders = null) => {
   return new Promise(async (resolve, reject) => {
     const token = await checkAndRefreshToken();
-    let url = Constants?.expoConfig?.api?.url
-    if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
+    let url = Constants?.expoConfig?.api?.url;
+    if (Constants?.expoConfig?.api?.port)
+      url += `:${Constants?.expoConfig?.api?.port}`;
     url += '/api' + endpoint;
 
     const isFormData = data instanceof FormData;
@@ -128,9 +138,10 @@ export const POST = (endpoint = '', data = {}, customHeaders = null) => {
       headers: {
         ...headers,
         ...customHeaders,
-        'Authorization': `Bearer ${token}`,
-        ...(isFormData ? {} : { 'Content-Type': 'application/json' })
+        Authorization: `Bearer ${token}`,
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       },
+
       body,
     };
 
@@ -141,7 +152,13 @@ export const POST = (endpoint = '', data = {}, customHeaders = null) => {
         reject(error);
       }
       if (!response.ok) {
-        reject(new Error(`${response.statusText || 'POST_DATA_ERROR'}\n${url}\n${JSON.stringify(data)}`));
+        reject(
+          new Error(
+            `${
+              response.statusText || 'POST_DATA_ERROR'
+            }\n${url}\n${JSON.stringify(data)}`
+          )
+        );
       }
       const json = await response.json();
       resolve(json);
@@ -155,21 +172,22 @@ export const POST = (endpoint = '', data = {}, customHeaders = null) => {
 export const PUT = async (endpoint = '', data = {}) => {
   return new Promise(async (resolve, reject) => {
     const token = await checkAndRefreshToken();
-    let url = Constants?.expoConfig?.api?.url
-    if (Constants?.expoConfig?.api?.port) url += `:${Constants?.expoConfig?.api?.port}`
-    url += '/api' + endpoint
+    let url = Constants?.expoConfig?.api?.url;
+    if (Constants?.expoConfig?.api?.port)
+      url += `:${Constants?.expoConfig?.api?.port}`;
+    url += '/api' + endpoint;
     const options = {
       method: 'PUT',
       headers: {
         ...headers,
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     };
     fetch(url, options)
       .then((response) => {
         if (response.status === 418 || response.status === 503) {
-          const error = new Error(response.status)
+          const error = new Error(response.status);
           reject(error);
         }
         resolve(response.json());

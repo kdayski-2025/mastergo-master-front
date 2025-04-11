@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "api": {
-      "url": "https://mars4.fanil.ru",
+      "url": "https://mars5.fanil.ru",
       "assets": "/assets/requests"
     },
     "userType": "master",

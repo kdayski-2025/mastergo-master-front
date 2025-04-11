@@ -142,7 +142,7 @@ export default function Profile() {
           </View>
 
           <Text style={styles.title}>{userProfile.name}</Text>
-          <Text style={styles.title}>+{userProfile.phone}</Text>
+          <Text style={styles.title}>{userProfile.phone}</Text>
           <View style={styles.ratingContainer}>
             <Text style={styles.title}>{userProfile.rating}</Text>
             <View

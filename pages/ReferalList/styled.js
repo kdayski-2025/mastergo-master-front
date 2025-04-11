@@ -12,14 +12,12 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: Colors.black,
-    marginBottom: Gaps.g8,
   },
   subtitle: {
     fontSize: 14,
     color: Colors.gray600,
     marginBottom: Gaps.g24,
   },
-
   text: {
     fontSize: 14,
     color: Colors.gray600,
@@ -29,31 +27,34 @@ export default StyleSheet.create({
     marginTop: Gaps.g40,
     marginBottom: Gaps.g24,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 4,
-    paddingHorizontal: 16,
+  referralItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  referralName: {
     fontSize: 16,
-    backgroundColor: Colors.white,
-    justifyContent: 'center',
-    height: 50,
-    marginBottom: 15,
-    width: '100%',
-    textAlign: 'left',
-    position: 'relative',
+    fontWeight: '500',
   },
-  pickerPlaceholder: {
-    opacity: 1,
+  referralPhone: {
+    fontSize: 14,
+    color: '#666',
   },
-  placeholderText: {
-    color: Colors.gray,
-    textAlign: 'left',
+  referralDate: {
+    fontSize: 12,
+    color: '#999',
   },
 
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 8,
+  },
   emptyText: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 12,
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });

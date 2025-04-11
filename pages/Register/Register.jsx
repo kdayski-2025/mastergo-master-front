@@ -7,33 +7,35 @@ import UserServiceInstance from '../../services/user.service';
 import useLogin from '../../hooks/useLogin';
 import useUser from '../../hooks/useUser';
 import styles from './styled';
-import CategoryServiceInstance from '../../services/category.service';
 import CitiesServiceInstance from '../../services/cities.service';
 import useCities from '../../hooks/useCities';
-import useCategory from '../../hooks/useCategory';
 import { Picker } from '@react-native-picker/picker';
 import { Colors } from '../../shared/tokens';
-import PhoneNumberInput from '../../components/Input/PhoneNumberInput';
+import useCategory from '../../hooks/useCategory';
+import CategoryServiceInstance from '../../services/category.service';
 
 export default function RegisterScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
   const { userProfile } = useUser();
-  const { loginInfo, token } = useLogin();
+  const { loginInfo, token, error, setError } = useLogin();
   const { cities } = useCities();
   const { categories } = useCategory();
+
   const [formData, setFormData] = useState({
-    phone: '',
     fullName: 'Magomed Magomedov',
     birthDate: '01.01.2000',
     citizenship: 'Chechnya',
     email: 'borba@mail.ru',
     cityId: '',
+    referralCode: '',
     masterTypeId: '',
   });
 
   useEffect(() => {
-    if (token) {
+    if (token && loginInfo.name !== null) {
       navigation.navigate('Main');
+    } else {
+      setError(null);
     }
   }, [token]);
 
@@ -42,19 +44,14 @@ export default function RegisterScreen({ navigation }) {
   }, [submitted, loginInfo]);
 
   useEffect(() => {
-    CategoryServiceInstance.get();
     CitiesServiceInstance.get();
+    CategoryServiceInstance.get();
   }, []);
 
   useEffect(() => {
-    if (loginInfo && loginInfo.phone) {
-      handleInputChange('phone', loginInfo.phone);
-    }
-  }, [loginInfo]);
-
-  useEffect(() => {
-    if (userProfile) navigation.navigate('Main');
-  }, [userProfile]);
+    if (error === 'Несуществующий промокод')
+      Alert.alert('Ошибка', 'Несуществующий промокод');
+  }, [error]);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -81,25 +78,29 @@ export default function RegisterScreen({ navigation }) {
       citizenship,
       email,
       cityId,
+      referralCode,
       masterTypeId,
-      phone,
     } = formData;
 
-    if (
-      !fullName ||
-      !birthDate ||
-      !citizenship ||
-      !email ||
-      !cityId ||
-      !masterTypeId ||
-      !phone
-    ) {
-      Alert.alert('Ошибка', 'Все поля должны быть заполнены');
+    // Проверка на заполненность полей
+    const emptyFields = [];
+    if (!fullName) emptyFields.push('ФИО');
+    if (!birthDate) emptyFields.push('Дата рождения');
+    if (!citizenship) emptyFields.push('Гражданство');
+    if (!email) emptyFields.push('E-mail');
+    if (!cityId) emptyFields.push('Город');
+    if (!masterTypeId) emptyFields.push('Профессия');
+
+    if (emptyFields.length > 0) {
+      Alert.alert(
+        'Ошибка',
+        `Не заполнены обязательные поля:\n\n${emptyFields.join('\n')}`
+      );
       return;
     }
 
     if (!validateFullName(fullName)) {
-      Alert.alert('Ошибка', 'ФИО должно содержать минимум Фимилию, Имя');
+      Alert.alert('Ошибка', 'ФИО должно содержать минимум Фамилию и Имя');
       return;
     }
 
@@ -118,8 +119,8 @@ export default function RegisterScreen({ navigation }) {
       birth: birthDate,
       citizenship,
       email,
-      phone,
       cityId,
+      referralCode,
       masterTypeId,
     });
     await LoginServiceInstance.register();
@@ -128,16 +129,10 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Стать клиентом Mastergo</Text>
+      <Text style={styles.title}>Стать мастером IZZI</Text>
       <Text style={styles.subtitle}>
         Укажите ваши данные, чтобы использовать все функции приложения
       </Text>
-
-      <PhoneNumberInput
-        placeholder="+7 (XXX) XXX-XX-XX"
-        value={formData.phone}
-        onChangeText={(value) => handleInputChange('phone', value)}
-      />
 
       <Input
         placeholder="Фамилия, имя, отчество"
@@ -208,6 +203,12 @@ export default function RegisterScreen({ navigation }) {
           ))}
         </Picker>
       </View>
+
+      <Input
+        placeholder="Реферальный код (необязательно)"
+        value={formData.referralCode}
+        onChangeText={(value) => handleInputChange('referralCode', value)}
+      />
 
       <Button text="Продолжить" onPress={handleSubmit} />
     </View>

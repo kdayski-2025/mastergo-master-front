@@ -9,7 +9,6 @@ class LoginService {
     error: null,
     loginInfo: null,
     token: null,
-    refreshToken: null
   };
 
   state = this.initialState;
@@ -32,21 +31,34 @@ class LoginService {
     this.state = {
       ...this.state,
       loading: true,
+      error: null,
     };
     this.state$.next(this.state);
 
     try {
       const result = await POST('/auth/login', data);
-      if (result?.data?.user) UserServiceInstance.state$.next({ ...UserServiceInstance.state$, user: result.data.user });
+      if (result?.data?.user)
+        UserServiceInstance.state$.next({
+          ...UserServiceInstance.state$,
+          user: result.data.user,
+        });
       this.state = {
         ...this.state,
         loading: false,
         error: result.error,
         token: result?.data?.token,
-        refreshToken: result?.data?.refreshToken
+        refreshToken: result?.data?.refreshToken,
+        loginInfo: result?.data?.user,
       };
-      result?.data?.token ? await AsyncStorage.setItem('auth_token', result?.data?.token) : await AsyncStorage.removeItem('auth_token');
-      result?.data?.refreshToken ? await AsyncStorage.setItem('refresh_token', result?.data?.refreshToken) : await AsyncStorage.removeItem('refresh_token');
+      result?.data?.token
+        ? await AsyncStorage.setItem('auth_token', result?.data?.token)
+        : await AsyncStorage.removeItem('auth_token');
+      result?.data?.refreshToken
+        ? await AsyncStorage.setItem(
+            'refresh_token',
+            result?.data?.refreshToken
+          )
+        : await AsyncStorage.removeItem('refresh_token');
       this.state$.next(this.state);
     } catch (error) {
       this.state = {
@@ -72,16 +84,22 @@ class LoginService {
 
     try {
       const result = await POST('/auth/register', this.state.loginInfo);
-      if (result?.data?.user) UserServiceInstance.state$.next({ ...UserServiceInstance.state$, user: result.data.user });
+      if (result?.data?.user)
+        UserServiceInstance.state$.next({
+          ...UserServiceInstance.state$,
+          user: result.data.user,
+        });
       this.state = {
         ...this.state,
         loading: false,
         error: result.error,
         token: result?.data?.token,
-        refreshToken: result?.data?.refreshToken
+        refreshToken: result?.data?.refreshToken,
       };
-      if (result?.data?.token) await AsyncStorage.setItem('auth_token', result.data.token);
-      if (result?.data?.refreshToken) await AsyncStorage.setItem('refresh_token', result.data.refreshToken);
+      if (result?.data?.token)
+        await AsyncStorage.setItem('auth_token', result.data.token);
+      if (result?.data?.refreshToken)
+        await AsyncStorage.setItem('refresh_token', result.data.refreshToken);
       this.state$.next(this.state);
     } catch (error) {
       this.state = {
@@ -100,13 +118,13 @@ class LoginService {
       await AsyncStorage.removeItem('refresh_token');
       this.state = {
         token: null,
-        refreshToken: null
+        refreshToken: null,
       };
       this.state$.next(this.state);
     } catch (error) {
       this.state = {
         token: null,
-        refreshToken: null
+        refreshToken: null,
       };
       this.state$.next(this.state);
     }

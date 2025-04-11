@@ -7,7 +7,7 @@ const useLogin = () => {
   const [error, setError] = useState(null);
   const [loginInfo, setLoginInfo] = useState(null);
   const [token, setToken] = useState(null);
-  const [refreshToken, setRefreshToken] = useState(null)
+  const [refreshToken, setRefreshToken] = useState(null);
 
   useEffect(() => {
     const login$ = LoginServiceInstance.state$.subscribe((state) => {
@@ -15,9 +15,8 @@ const useLogin = () => {
       setError(state.error);
       setLoginInfo(state.loginInfo);
       setToken(state.token);
-      setRefreshToken(state.refreshToken)
+      setRefreshToken(state.refreshToken);
     });
-
     return () => {
       login$.unsubscribe();
     };
@@ -37,7 +36,8 @@ const useLogin = () => {
     loading,
     loginInfo,
     token,
-    refreshToken
+    refreshToken,
+    setError,
   };
 };
 

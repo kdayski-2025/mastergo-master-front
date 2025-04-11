@@ -12,6 +12,11 @@ import useUser from '../../hooks/useUser';
 import CategoryServiceInstance from '../../services/category.service';
 import useCategory from '../../hooks/useCategory';
 import UserServiceInstance from '../../services/user.service';
+import { useNavigation } from '@react-navigation/native';
+
+import Input from '../../components/Input/Input';
+
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SettingsScreen() {
   const { cities } = useCities();
@@ -20,7 +25,10 @@ export default function SettingsScreen() {
   const [formData, setFormData] = useState({
     cityId: '',
     masterTypeId: '',
+    referralCode: '',
   });
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     CategoryServiceInstance.get();
@@ -31,16 +39,21 @@ export default function SettingsScreen() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
-    const { cityId, masterTypeId } = formData;
+  const handleNavigate = () => {
+    navigation.navigate('ReferralList');
+  };
 
-    if (!cityId || !masterTypeId) {
+  const handleSubmit = async () => {
+    const { cityId, masterTypeId, referralCode } = formData;
+
+    if (!cityId || !masterTypeId || !referralCode) {
       Alert.alert('Ошибка', 'Все поля должны быть заполнены');
       return;
     }
     await LoginServiceInstance.set({
       cityId,
       masterTypeId,
+      referralCode,
     });
 
     await LoginServiceInstance.edit();
@@ -53,6 +66,7 @@ export default function SettingsScreen() {
     setFormData({
       cityId: userProfile?.cityId,
       masterTypeId: userProfile?.masterTypeId,
+      referralCode: userProfile?.referralCode,
     });
   }, [userProfile]);
 
@@ -63,7 +77,7 @@ export default function SettingsScreen() {
         <Text style={styles.subtitle}>Управление вашим аккаунтом</Text>
       </View>
 
-      <View style={{ ...styles.input, paddingHorizontal: 0 }}>
+      <View>
         <Picker
           selectedValue={formData.cityId}
           onValueChange={(value) => handleInputChange('cityId', value)}
@@ -85,7 +99,7 @@ export default function SettingsScreen() {
         </Picker>
       </View>
 
-      <View style={{ ...styles.input, paddingHorizontal: 0 }}>
+      <View>
         <Picker
           selectedValue={formData.masterTypeId}
           onValueChange={(value) => handleInputChange('masterTypeId', value)}
@@ -105,6 +119,26 @@ export default function SettingsScreen() {
             <Picker.Item key={type.id} label={type.name} value={type.id} />
           ))}
         </Picker>
+      </View>
+
+      <View>
+        <Text style={styles.text}>Промокод</Text>
+        <Input
+          placeholder="Промокод"
+          value={formData.referralCode}
+          onChangeText={(value) => handleInputChange('referralCode', value)}
+        />
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.emptyText} onPress={() => handleNavigate()}>
+            Список рефералов
+          </Text>
+          <Ionicons
+            name="arrow-forward"
+            size={16}
+            color="#666"
+            style={{ marginTop: '4', marginLeft: '4' }}
+          />
+        </View>
       </View>
 
       <Button text="Сохранить изменения" onPress={handleSubmit} />

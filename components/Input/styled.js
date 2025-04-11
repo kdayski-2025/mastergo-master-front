@@ -20,10 +20,12 @@ export const pinCodeStyles = StyleSheet.create({
     marginVertical: 20,
   },
   input: {
-    width: 20,
-    height: 20,
-    borderRadius: 45,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     marginHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -38,4 +40,3 @@ export const phoneNumberInputStyles = StyleSheet.create({
     fontSize: 18,
   },
 });
-

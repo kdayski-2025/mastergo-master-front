@@ -10,11 +10,12 @@ export default function Button({
   heightLoader,
   mt,
   mb,
+  disable,
   ...props
 }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity disabled={isLoading} {...props}>
+      <TouchableOpacity disabled={isLoading || disable} {...props}>
         <View style={[styles.button, styleBtn]}>
           {isLoading ? (
             <Loader color="white" height={heightLoader} mt={mt} mb={mb} />
