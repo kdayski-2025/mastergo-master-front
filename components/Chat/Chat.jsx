@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import styles from './styled';
 import useChat from '../../hooks/useChat';
 import SendButton from '../SendButton/SendButton';
@@ -17,9 +23,21 @@ export default function ActiveDetailsScreen({ requestId }) {
     const isClient = item.user?.role === 'client';
 
     return (
-      <View style={[styles.messageContainer, isClient ? styles.leftMessage : styles.rightMessage]}>
-        {isClient && item.user?.name && <Text style={styles.senderName}>{item.user.name}</Text>}
-        <Text style={[styles.messageText, isClient ? styles.leftMessageText : styles.rightMessageText]}>
+      <View
+        style={[
+          styles.messageContainer,
+          isClient ? styles.leftMessage : styles.rightMessage,
+        ]}
+      >
+        {isClient && item.user?.name && (
+          <Text style={styles.senderName}>{item.user.name}</Text>
+        )}
+        <Text
+          style={[
+            styles.messageText,
+            isClient ? styles.leftMessageText : styles.rightMessageText,
+          ]}
+        >
           {item.text}
         </Text>
         <Text style={styles.messageTime}>
@@ -52,8 +70,8 @@ export default function ActiveDetailsScreen({ requestId }) {
   }
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
     >

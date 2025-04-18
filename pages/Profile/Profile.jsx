@@ -113,6 +113,10 @@ export default function Profile() {
       id: 2,
       name: 'Выход',
     },
+    {
+      id: 3,
+      name: 'Вывод средств',
+    },
   ];
 
   const handleMenuChange = async (value) => {
@@ -123,6 +127,9 @@ export default function Profile() {
       case 2:
         await LoginServiceInstance.logout();
         navigation.navigate('Login');
+        break;
+      case 3:
+        navigation.navigate('Payments');
         break;
       default:
         break;
