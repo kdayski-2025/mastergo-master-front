@@ -6,7 +6,7 @@ import useRequest from '../../hooks/useRequest';
 import useUser from '../../hooks/useUser';
 import styles from './styled';
 import Input from '../../components/Input/Input';
-import Chat from '../../components/Chat/Chat';
+import Chat from '../../components/SocketChat/Chat';
 import DescriptionRequest from '../../components/DescriptionRequest/DescriptionRequest';
 import Feedback from '../../components/Feedback/Feedback';
 import UserServiceInstance from '../../services/user.service';
@@ -42,8 +42,8 @@ export default function RequestDetailsScreen({ route }) {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 10000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchData, 10000);
+    // return () => clearInterval(interval);
   }, [request]);
 
   useEffect(() => {
@@ -63,8 +63,8 @@ export default function RequestDetailsScreen({ route }) {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 10000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchData, 10000);
+    // return () => clearInterval(interval);
   }, [id]);
 
   const handleComplete = async () => {
@@ -111,11 +111,7 @@ export default function RequestDetailsScreen({ route }) {
     <View style={styles.container}>
       <View style={styles.header} />
       {request && (
-        <DescriptionRequest
-          description={request.description}
-          address={request.address}
-          photos={request.photos}
-        />
+        <DescriptionRequest description={request.description} address={request.address} photos={request.photos} />
       )}
       {request && (
         <>
@@ -155,42 +151,24 @@ export default function RequestDetailsScreen({ route }) {
           )}
           {offer && request.status === 'in_progress' && (
             <View style={styles.wrapper}>
-              <Button
-                isLoading={btnLoader}
-                text={'Завершить работу'}
-                onPress={handleComplete}
-                mt={11}
-                mb={11}
-              />
+              <Button isLoading={btnLoader} text={'Завершить работу'} onPress={handleComplete} mt={11} mb={11} />
 
-              <View style={styles.chatWrapper}>
-                <Chat requestId={id} />
-              </View>
+              <Chat roomType="request" requestId={id} />
             </View>
           )}
           {!loadingReview && !isReviewed && request.status === 'completed' && (
             <View style={styles.wrapperFeedback}>
               <Text>Вы завершили эту заявку</Text>
-              {request.requestType === 'auction' && (
-                <Text>Выплата {offer.price} руб.</Text>
-              )}
-              {request.requestType === 'fixed' && (
-                <Text>Выплата {request.price} руб.</Text>
-              )}
-              <Feedback
-                handleSendFeedback={handleSendFeedback}
-                requestId={id}
-                isLoading={btnSendLoader}
-              />
+              {request.requestType === 'auction' && <Text>Выплата {offer.price} руб.</Text>}
+              {request.requestType === 'fixed' && <Text>Выплата {request.price} руб.</Text>}
+              <Feedback handleSendFeedback={handleSendFeedback} requestId={id} isLoading={btnSendLoader} />
             </View>
           )}
-          {offer &&
-            request.status === 'completed' &&
-            offer.status === 'rejected' && (
-              <View style={styles.wrapper}>
-                <Text>Ваша заявка отклонена мастером</Text>
-              </View>
-            )}
+          {offer && request.status === 'completed' && offer.status === 'rejected' && (
+            <View style={styles.wrapper}>
+              <Text>Ваша заявка отклонена мастером</Text>
+            </View>
+          )}
         </>
       )}
     </View>

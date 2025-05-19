@@ -8,20 +8,27 @@ export const Colors = {
   greenDark: '#009245', // Тёмный зелёный
   greenLight: '#00E676', // Светлый зелёный
 
+  //UI цвета
+  orange: '#FD6802',
+  gray97: '#F7F7F7',
+  gainsboro: '#DADADA',
+  darkGray: '#A5AFD4',
+  gray800: '#373737',
+  gray500: '#B9B9B9',
+  error: '#FF1C1C',
+
   // Серые оттенки
   gray50: '#FAFAFA',
   gray100: '#F5F5F5',
   gray200: '#EEEEEE',
   gray300: '#E0E0E0',
   gray400: '#BDBDBD',
-  gray500: '#9E9E9E',
   gray600: '#757575',
   gray700: '#616161',
-  gray800: '#424242',
   gray900: '#212121',
 
   // Дополнительные цвета
-  error: '#FF3B30',
+
   warning: '#FF9500',
   success: '#34C759',
   info: '#007AFF',

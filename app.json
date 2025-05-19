@@ -9,8 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "api": {
-      "url": "https://mars5.fanil.ru",
-      "assets": "/assets/requests"
+      "url": "http://178.250.156.152",
+      "socket": "http://178.250.156.152",
+      "socketPort": 41007,
+      "port": 31007,
+      "maxImageSize": 5242880
     },
     "userType": "master",
     "ios": {
@@ -67,7 +70,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "7674e828-acbc-4c13-b245-56a4fd9f3360"
+        "projectId": "69ef593d-5d84-4157-a5a3-22fabec7a838"
       }
     }
   }

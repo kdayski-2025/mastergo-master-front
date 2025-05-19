@@ -45,10 +45,10 @@ export default function Profile() {
       };
 
       fetchData();
-      const interval = setInterval(fetchData, 10000);
-      return () => {
-        clearInterval(interval);
-      };
+      // const interval = setInterval(fetchData, 10000);
+      // return () => {
+      // clearInterval(interval);
+      // };
     }, [activeTab])
   );
 
@@ -66,35 +66,11 @@ export default function Profile() {
 
     for (let i = 0; i < maxStars; i++) {
       if (rating >= i + 1) {
-        stars.push(
-          <FontAwesome
-            key={i}
-            name="star"
-            size={20}
-            color="#FFD700"
-            style={{ marginRight: 2 }}
-          />
-        );
+        stars.push(<FontAwesome key={i} name="star" size={20} color="#FFD700" style={{ marginRight: 2 }} />);
       } else if (rating > i) {
-        stars.push(
-          <FontAwesome
-            key={i}
-            name="star-half-o"
-            size={20}
-            color="#FFD700"
-            style={{ marginRight: 2 }}
-          />
-        );
+        stars.push(<FontAwesome key={i} name="star-half-o" size={20} color="#FFD700" style={{ marginRight: 2 }} />);
       } else {
-        stars.push(
-          <FontAwesome
-            key={i}
-            name="star-o"
-            size={20}
-            color="#808080"
-            style={{ marginRight: 2 }}
-          />
-        );
+        stars.push(<FontAwesome key={i} name="star-o" size={20} color="#808080" style={{ marginRight: 2 }} />);
       }
     }
     return stars;
@@ -141,10 +117,7 @@ export default function Profile() {
       {userProfile && (
         <View style={styles.header}>
           <View style={styles.wrapperImage}>
-            <Image
-              source={ProfileDefaultIcon}
-              style={{ width: 48, height: 48 }}
-            />
+            <Image source={ProfileDefaultIcon} style={{ width: 48, height: 48 }} />
             <PickerMenu onValueChange={handleMenuChange} options={menu} />
           </View>
 
@@ -162,10 +135,7 @@ export default function Profile() {
               {renderStars(userProfile.rating)}
             </View>
           </View>
-          <Text
-            style={styles.reviews}
-            onPress={() => handlePressReviews(userProfile)}
-          >
+          <Text style={styles.reviews} onPress={() => handlePressReviews(userProfile)}>
             {userProfile.rewiews.length} отзывы
           </Text>
         </View>
@@ -178,10 +148,7 @@ export default function Profile() {
             {!loading ? (
               requests && requests.length > 0 ? (
                 requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
+                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>
                     <Text type={'description'}>{request.address}</Text>
@@ -200,10 +167,7 @@ export default function Profile() {
             {!loading ? (
               requests && requests.length > 0 ? (
                 requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
+                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>
                     <Text type={'description'}>{request.address}</Text>
@@ -222,10 +186,7 @@ export default function Profile() {
             {!loading ? (
               requests && requests.length > 0 ? (
                 requests.map((request, index) => (
-                  <Card
-                    key={index}
-                    onPress={() => handlePress('RequestDetails', request.id)}
-                  >
+                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
                     <Text type={'title'}>{request.masterType.name}</Text>
                     <Text type={'description'}>{request.description}</Text>
                     <Text type={'description'}>{request.address}</Text>
