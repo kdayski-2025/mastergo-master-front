@@ -9,6 +9,10 @@ export const handlePhotoUpload = async (states) => {
 			allowsEditing: true,
 			aspect: [4, 3],
 			quality: 0.8,
+			exif: false,
+			allowsMultipleSelection: false,
+			width: 512,
+			height: 384,
 		});
 
 		if (!result.canceled) {
@@ -35,6 +39,9 @@ export const handleCameraCapture = async (states) => {
 			allowsEditing: true,
 			aspect: [4, 3],
 			quality: 0.8,
+			exif: false,
+			width: 512,
+			height: 384,
 		});
 
 		if (!result.canceled) {

@@ -16,14 +16,14 @@ export const tabsStyles = StyleSheet.create({
     borderBottomColor: 'transparent',
   },
   "tab-active": {
-    borderBottomColor: Colors.greenDark,
+    borderBottomColor: Colors.orange,
   },
   "tab-text": {
     color: '#666',
     fontSize: 16,
   },
   "active-tab-text": {
-    color: Colors.greenDark,
+    color: Colors.orange,
     fontWeight: '500',
   },
   "tab-content": {
@@ -53,7 +53,7 @@ export const tabRouterStyles = StyleSheet.create({
     padding: Gaps.g12,
   },
   "tab-label": {
-    color: Colors.green,
+    color: Colors.orange,
     fontSize: 12,
     fontWeight: '500',
   },

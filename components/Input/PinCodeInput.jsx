@@ -45,7 +45,7 @@ export default function PincodeInput({ length = 5, onComplete }) {
           ref={(ref) => (inputs[index] = ref)}
           style={{
             ...pinCodeStyles.input,
-            backgroundColor: value ? Colors.success : Colors.error,
+            backgroundColor: value ? Colors.orange : Colors.darkGray,
             textAlign: 'center',
             fontSize: 16,
             color: Colors.white,

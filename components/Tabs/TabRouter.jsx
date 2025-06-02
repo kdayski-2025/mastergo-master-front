@@ -21,7 +21,7 @@ function TabScreens() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: tabRouterStyles['tab-bar'],
-        tabBarActiveTintColor: Colors.green,
+        tabBarActiveTintColor: Colors.orange,
         tabBarInactiveTintColor: Colors.gray,
         tabBarLabelStyle: tabRouterStyles['tab-label'],
         tabBarItemStyle: {
@@ -36,9 +36,7 @@ function TabScreens() {
         name="Запросы"
         component={RequestsScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <RequestsIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <RequestsIcon width={size} height={size} fill={color} />,
         }}
       />
 
@@ -46,26 +44,11 @@ function TabScreens() {
         name="Профиль"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <ProfileIcon width={size} height={size} fill={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <ProfileIcon width={size} height={size} fill={color} />,
         }}
       />
     </Tab.Navigator>
   );
 }
 
-export default function TabNavigator() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        animation: 'none',
-      }}
-    >
-      <Stack.Screen name="TabScreens" component={TabScreens} />
-    </Stack.Navigator>
-  );
-}
+export default TabScreens;

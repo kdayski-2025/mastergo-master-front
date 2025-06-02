@@ -4,11 +4,13 @@ import { Text, View, ScrollView } from 'react-native';
 
 import RequestsServiceInstance from '../../services/requests.service';
 import styles from './styled';
-import Card from '../../components/Card/Card';
+import UICard from '../../components/UI/Card/Card';
 import useRequests from '../../hooks/useRequests';
 import EmptyContent from '../../components/EmptyContent/EmptyContent';
 import Map from '../../components/Map/Map';
 import Loader from '../../components/Loader/Loader';
+import Container from '../../components/UI/Container/Container';
+import Back from '../../components/UI/Back/Back';
 
 export default function RequestsScreen() {
   const navigation = useNavigation();
@@ -46,22 +48,30 @@ export default function RequestsScreen() {
       // };
     }, [])
   );
+
   return (
     <View style={styles.container}>
-      <View style={styles.header} />
+      <View style={styles.backButtonContainer}>
+        <Back marginBottom={0} />
+      </View>
       <Map target={target} setMapLoading={setMapLoading} />
       <ScrollView contentContainerStyle={styles.content}>
         {!requests.length > 0 ? (
           <EmptyContent title={'Нет активных заказов'} />
         ) : !loading ? (
           requests.map((request, index) => (
-            <Card key={index} onPress={() => handlePress(request)} state={active === request.id ? 'target' : 'default'}>
-              <Text type={'title'}>{request.masterType.name}</Text>
-              <Text type={'description'}>{request.description}</Text>
-              <Text type={'description'}>{request.address}</Text>
-              <Text type={'description'}>{request.requestType}</Text>
-              {request.price ? <Text type={'price'}>{request.price}р</Text> : <></>}
-            </Card>
+            <UICard
+              key={index}
+              onPress={() => handlePress(request)}
+              cardData={{
+                title: request.masterType.name,
+                description: request.description,
+                where: request.description,
+                price: request.price,
+                adress: request.address,
+              }}
+              state={active === request.id ? 'target' : 'default'}
+            />
           ))
         ) : (
           <Loader />

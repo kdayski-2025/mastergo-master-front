@@ -23,11 +23,11 @@ export default StyleSheet.create({
     marginBottom: 4,
   },
   price: {
-    color: Colors.green,
+    color: Colors.orange,
     fontWeight: '500',
   },
   target: {
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.orange,
   },
   navigate: {
     position: 'absolute',

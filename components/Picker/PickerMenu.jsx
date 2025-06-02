@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { menu } from './styled';
 import { Picker } from '@react-native-picker/picker';
+import { Colors } from '../../shared/tokens';
 
 export default function PickerMenu({ options, ...props }) {
   const pickerRef = React.useRef(null);
@@ -14,7 +15,7 @@ export default function PickerMenu({ options, ...props }) {
   return (
     <View style={menu.input}>
       <TouchableOpacity onPress={handleIconPress} style={menu['icon-wrapper']}>
-        <Ionicons name="settings-outline" size={24} color="black" />
+        <Ionicons name="settings-outline" size={24} color={Colors.orange} />
       </TouchableOpacity>
       <Picker ref={pickerRef} style={menu.placeholder} mode="dialog" {...props}>
         {options.map((type) => (

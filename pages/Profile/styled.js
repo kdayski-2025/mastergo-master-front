@@ -21,7 +21,6 @@ export default StyleSheet.create({
   },
   header: {
     marginTop: Gaps.g40,
-
     marginBottom: 12,
   },
   ratingContainer: {
@@ -42,5 +41,8 @@ export default StyleSheet.create({
   },
   TabsContaiener: {
     marginBottom: 50,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
 });

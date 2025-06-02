@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from 'socket.io-client';
 import { Alert } from 'react-native';
-import * as Crypto from 'expo-crypto';
+import { generateUUID } from '../lib/lib';
 
 const SOCKET_URL = `${Constants?.expoConfig?.api?.socket}:${Constants?.expoConfig?.api?.socketPort}`
 const MAX_IMAGE_SIZE = Constants?.expoConfig?.api?.maxImageSize || 5 * 1024 * 1024; // 5MB по умолчанию
@@ -18,7 +18,8 @@ class NeuralService {
 		socket: null,
 		connected: false,
 		roomType: null,
-		typing: false
+		typing: false,
+		myUserId: null
 	};
 
 	state$ = new BehaviorSubject(this.initialState);
@@ -241,7 +242,7 @@ class NeuralService {
 					type: this.getImageType(photo.uri)
 				};
 			}
-			const uid = Crypto.randomUUID();
+			const uid = generateUUID();
 			// Создаем сообщение пользователя
 			const userMessage = {
 				uid: uid,

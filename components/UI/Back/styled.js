@@ -9,11 +9,13 @@ export default StyleSheet.create({
     height: 24,
     alignItems: 'center',
     marginBottom: 20,
+    zIndex: 100,
   },
   text: {
     marginLeft: 8,
     fontSize: 12,
     fontWeight: 500,
     color: Colors.black,
+    marginBottom: 1,
   },
 });

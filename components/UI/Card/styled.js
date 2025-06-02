@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors, Gaps } from '../../../shared/tokens';
+import { Colors, Gaps, Radius } from '../../../shared/tokens';
 
 export default StyleSheet.create({
   card: {
@@ -36,6 +36,21 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 6,
+  },
+  target: {
+    backgroundColor: Colors.orange,
+  },
+  navigate: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
 
   //delete

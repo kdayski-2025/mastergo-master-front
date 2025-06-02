@@ -15,4 +15,13 @@ export default StyleSheet.create({
     padding: Gaps.g12,
     paddingTop: 0,
   },
+  backButtonContainer: {
+    position: 'absolute',
+    top: 50,
+    left: 16,
+    zIndex: 1000,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 8,
+    padding: 8,
+  },
 });

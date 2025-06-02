@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View } from 'react-native';
 import styles from './styled';
 
-const Container = ({ children, pt, pb, pr, pl, safe, bgColor }) => {
+const Container = ({ children, pt, pb, pr, pl, safe, bgColor, style }) => {
   return safe ? (
     <SafeAreaView
       style={[
@@ -15,6 +15,7 @@ const Container = ({ children, pt, pb, pr, pl, safe, bgColor }) => {
           paddingLeft: pl ? pl : 15,
           backgroundColor: bgColor ? bgColor : 'transparent',
         },
+        style,
       ]}
     >
       {children}
@@ -29,6 +30,7 @@ const Container = ({ children, pt, pb, pr, pl, safe, bgColor }) => {
           paddingRight: pr ? pr : 15,
           paddingLeft: pl ? pl : 15,
         },
+        style,
       ]}
     >
       {children}

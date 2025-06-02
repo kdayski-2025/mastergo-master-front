@@ -11,6 +11,7 @@ export default function Button({
   mt,
   mb,
   disable,
+  children,
   ...props
 }) {
   return (
@@ -20,8 +21,9 @@ export default function Button({
           {isLoading ? (
             <Loader color="white" height={heightLoader} mt={mt} mb={mb} />
           ) : (
-            <Text style={[styles.text, styleText]}>{text}</Text>
+            <>{text && <Text style={[styles.text, styleText]}>{text}</Text>}</>
           )}
+          {children}
         </View>
       </TouchableOpacity>
     </View>

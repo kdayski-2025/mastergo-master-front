@@ -3,10 +3,11 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styled';
 import SvgBaloon from './svg/SVGBaloon';
 import SvgCardPicker from '../SvgCardPicker/SvgCardPicker';
+import RightArrow from '../../../assets/icons/right-arrow.svg';
 
-const Card = ({ cardData, onPress }) => {
+const Card = ({ cardData, onPress, state }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.card}>
+    <TouchableOpacity onPress={onPress} style={[styles.card, state === 'target' && styles.target]}>
       <View style={styles.content}>
         <View style={styles.titleWrapper}>
           <SvgCardPicker title={cardData.title} />
@@ -35,6 +36,11 @@ const Card = ({ cardData, onPress }) => {
           <Text style={styles.row}>{cardData.adress}</Text>
         </View>
       </View>
+      {state === 'target' && (
+        <View style={styles.navigate}>
+          <RightArrow />
+        </View>
+      )}
     </TouchableOpacity>
   );
 };

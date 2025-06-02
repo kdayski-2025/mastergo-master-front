@@ -20,13 +20,16 @@ export default function LiveChat({ roomType }) {
   const [sending, setSending] = useState(false);
   const flatListRef = useRef(null);
 
-  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
-    viewableItems.forEach(({ item }) => {
-      if (item.senderId !== myUserId) {
-        if (!item.readAt) NeuralServiceInstance.messageRead(item.id);
-      }
-    });
-  }, []);
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }) => {
+      viewableItems.forEach(({ item }) => {
+        if (item.senderId !== myUserId) {
+          if (!item.readAt) NeuralServiceInstance.messageRead(item.id);
+        }
+      });
+    },
+    [myUserId]
+  );
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,

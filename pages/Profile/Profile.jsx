@@ -20,7 +20,7 @@ import LoginServiceInstance from '../../services/login.service';
 import Loader from '../../components/Loader/Loader';
 
 export default function Profile() {
-  const { userProfile, loading: loadingUser } = useUser();
+  const { userProfile } = useUser();
   const [activeTab, setActiveTab] = useState('in_progress');
   const navigation = useNavigation();
   const { requests, loading } = useRequests();
@@ -28,15 +28,6 @@ export default function Profile() {
     { title: 'Активные', value: 'in_progress' },
     { title: 'Выполненные', value: 'completed' },
   ];
-
-  useEffect(() => {
-    const fetchData = () => {
-      UserServiceInstance.getProfile();
-    };
-    fetchData();
-    // const interval = setInterval(fetchData, 10000);
-    // return () => clearInterval(interval);
-  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -47,10 +38,19 @@ export default function Profile() {
       fetchData();
       // const interval = setInterval(fetchData, 10000);
       // return () => {
-      // clearInterval(interval);
+      //   clearInterval(interval);
       // };
     }, [activeTab])
   );
+
+  useEffect(() => {
+    const fetchData = () => {
+      UserServiceInstance.getProfile();
+    };
+    fetchData();
+    // const interval = setInterval(fetchData, 10000);
+    // return () => clearInterval(interval);
+  }, []);
 
   const handlePress = (type, id) => {
     navigation.navigate(type, { id });
@@ -120,7 +120,6 @@ export default function Profile() {
             <Image source={ProfileDefaultIcon} style={{ width: 48, height: 48 }} />
             <PickerMenu onValueChange={handleMenuChange} options={menu} />
           </View>
-
           <Text style={styles.title}>{userProfile.name}</Text>
           <Text style={styles.title}>{userProfile.phone}</Text>
           <View style={styles.ratingContainer}>
@@ -144,61 +143,54 @@ export default function Profile() {
       <View style={styles.TabsContaiener}>
         <Text style={styles.title}>Заказы</Text>
         <Tabs activeTab={activeTab} tabs={tabs} onTabChange={handleTabChange}>
-          <Tab value={'open'} activeTab={activeTab}>
-            {!loading ? (
-              requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
-              ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )
-            ) : (
-              <Loader />
-            )}
-          </Tab>
-
           <Tab value={'in_progress'} activeTab={activeTab}>
-            {!loading ? (
-              requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={styles.scrollViewContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {!loading ? (
+                requests && requests.length > 0 ? (
+                  requests.map((request, index) => (
+                    <Card key={index} onPress={() => handlePress('Offers', request.id)}>
+                      <Text type={'title'}>{request.masterType.name}</Text>
+                      <Text type={'description'}>{request.description}</Text>
+                      <Text type={'description'}>{request.address}</Text>
+                      <Text type={'price'}>2000р</Text>
+                    </Card>
+                  ))
+                ) : (
+                  <Text type={'title'}>Заказов нет!</Text>
+                )
               ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )
-            ) : (
-              <Loader />
-            )}
+                <Loader />
+              )}
+            </ScrollView>
           </Tab>
 
           <Tab value={'completed'} activeTab={activeTab}>
-            {!loading ? (
-              requests && requests.length > 0 ? (
-                requests.map((request, index) => (
-                  <Card key={index} onPress={() => handlePress('RequestDetails', request.id)}>
-                    <Text type={'title'}>{request.masterType.name}</Text>
-                    <Text type={'description'}>{request.description}</Text>
-                    <Text type={'description'}>{request.address}</Text>
-                    <Text type={'price'}>2000р</Text>
-                  </Card>
-                ))
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={styles.scrollViewContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {!loading ? (
+                requests && requests.length > 0 ? (
+                  requests.map((request, index) => (
+                    <Card key={index} onPress={() => handlePress('Offers', request.id)}>
+                      <Text type={'title'}>{request.masterType.name}</Text>
+                      <Text type={'description'}>{request.description}</Text>
+                      <Text type={'description'}>{request.address}</Text>
+                      <Text type={'price'}>2000р</Text>
+                    </Card>
+                  ))
+                ) : (
+                  <Text type={'title'}>Заказов нет!</Text>
+                )
               ) : (
-                <Text type={'title'}>Заказов нет!</Text>
-              )
-            ) : (
-              <Loader />
-            )}
+                <Loader />
+              )}
+            </ScrollView>
           </Tab>
         </Tabs>
       </View>
