@@ -1,18 +1,16 @@
 {
   "expo": {
-    "name": "matergo-master",
-    "slug": "matergo-master",
+    "name": "izi-master",
+    "slug": "izi-master",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "mastergo-master",
+    "scheme": "izi-master",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "api": {
-      "url": "http://178.250.156.152",
-      "socket": "http://178.250.156.152",
-      "socketPort": 41007,
-      "port": 31007,
+      "url": "https://mars5.fanil.ru",
+      "socket": "https://mars5socket.fanil.ru",
       "maxImageSize": 5242880
     },
     "userType": "master",
@@ -43,7 +41,7 @@
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
       ],
-      "package": "com.avanor.matergomaster"
+      "package": "com.kdayski.izimaster"
     },
     "web": {
       "bundler": "metro",
@@ -70,7 +68,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "69ef593d-5d84-4157-a5a3-22fabec7a838"
+        "projectId": "0f1adcf1-fa60-4d3f-80f3-ec21144744f7"
       }
     }
   }

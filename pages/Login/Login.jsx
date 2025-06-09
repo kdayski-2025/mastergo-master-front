@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
   }, [token, submitted]);
 
   const handleSubmit = () => {
-    Linking.openURL('https://t.me/MasterGoVerBot');
+    Linking.openURL('https://t.me/iziVerBot');
     navigation.navigate('Pin');
   };
 

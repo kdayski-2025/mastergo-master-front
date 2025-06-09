@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { Alert } from 'react-native';
 import { generateUUID } from '../lib/lib';
 
-const SOCKET_URL = `${Constants?.expoConfig?.api?.socket}:${Constants?.expoConfig?.api?.socketPort}`
+const SOCKET_URL = `${Constants?.expoConfig?.api?.socket}${Constants?.expoConfig?.api?.socketPort ? `:${Constants?.expoConfig?.api?.socketPort}` : ''}`
 const MAX_IMAGE_SIZE = Constants?.expoConfig?.api?.maxImageSize || 5 * 1024 * 1024; // 5MB по умолчанию
 
 class NeuralService {
